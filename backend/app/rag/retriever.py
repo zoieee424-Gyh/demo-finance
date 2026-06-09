@@ -133,6 +133,7 @@ class KnowledgeRetriever:
     def __init__(
         self,
         chroma_store: Any = None,
+        graph_store: Any = None,
         selector: Any = None,
         secondary_detector: Any = None,
     ) -> None:
@@ -143,6 +144,7 @@ class KnowledgeRetriever:
             secondary_detector: SecondaryIntentDetector (or None to create default).
         """
         self._chroma_store = chroma_store
+        self._graph_store = graph_store
         self._selector = selector or CollectionSelector()
         self._secondary_detector = secondary_detector or SecondaryIntentDetector()
 
@@ -162,6 +164,12 @@ class KnowledgeRetriever:
         """The currently configured retrieval mode (semantic/bm25/hybrid)."""
         from app.core.config import settings
         return settings.retrieval_mode
+
+    @property
+    def graphrag_enabled(self) -> bool:
+        """Whether optional GraphRAG evidence expansion is enabled."""
+        from app.core.config import settings
+        return settings.graphrag_enabled
 
     def retrieve(self, queries: list[dict]) -> list[Source]:
         """Retrieve sources for the given queries.
@@ -190,14 +198,20 @@ class KnowledgeRetriever:
         if mode == "hybrid":
             sources = self._retrieve_hybrid(queries)
             if sources:
-                return sources
+                return self._merge_sources(
+                    sources,
+                    self._retrieve_graphrag_placeholder(queries),
+                )
             return self._retrieve_from_mock(queries)
 
         # 默认主路径：Chroma 语义检索。
         if self.has_chroma:
             sources = self._retrieve_from_chroma(queries)
             if sources:
-                return sources
+                return self._merge_sources(
+                    sources,
+                    self._retrieve_graphrag_placeholder(queries),
+                )
 
         # 本地展示兜底：无 Chroma 或无结果时仍给出可展示来源。
         return self._retrieve_from_mock(queries)
@@ -243,6 +257,46 @@ class KnowledgeRetriever:
         )
         _ = queries
         return []
+
+    def _retrieve_graphrag_placeholder(self, queries: list[dict]) -> list[Source]:
+        """Optional GraphRAG evidence expansion shell.
+
+        Current MVP behavior:
+          - disabled by default via FIN_AGENT_GRAPHRAG_ENABLED=false
+          - when enabled but no graph_store is injected, returns []
+          - future graph_store can add entity/relation/community evidence
+        """
+        if not self.graphrag_enabled:
+            return []
+
+        query_text = " ".join(q.get("query", "") for q in queries)
+        if not query_text.strip():
+            return []
+
+        from app.rag.graph_retriever import GraphRAGRetriever
+
+        retriever = GraphRAGRetriever(graph_store=self._graph_store)
+        return retriever.search(
+            query_text,
+            intent=self._infer_intent(queries),
+            top_k=min(len(queries) * 2, 6),
+        )
+
+    @staticmethod
+    def _merge_sources(primary: list[Source], extra: list[Source]) -> list[Source]:
+        """Merge evidence sources by title while preserving primary order."""
+        if not extra:
+            return primary
+
+        merged: list[Source] = []
+        seen: set[str] = set()
+        for source in [*primary, *extra]:
+            title = source.title or ""
+            if not title or title in seen:
+                continue
+            seen.add(title)
+            merged.append(source)
+        return merged
 
     # ── Chroma retrieval ────────────────────────────────────────────
 

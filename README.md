@@ -14,7 +14,7 @@
 | 大模型 | 通过 LLM Provider 层接入云端 API，当前演示使用 `deepseek-v4-flash` |
 | 本地模型/免费 API 适配 | 模型调用已封装在 Provider 层，可替换为本地 Qwen/Llama 或其他免费 API |
 | 向量数据库 | Chroma |
-| Agent / RAG 核心 | DeepAgent + LangChain/LangGraph 风格工具编排 + Agentic RAG |
+| Agent / RAG 核心 | DeepAgent + LangChain/LangGraph 风格工具编排 + Agentic RAG；RAG 侧预留 BM25、Hybrid、GraphRAG 扩展 |
 | 前端 | Vue3 + Element Plus |
 | 数据库 | MySQL 元数据层，用于存放知识库结构化信息 |
 | 版本管理 | Git，日志见 `docs/git-log.md` |
@@ -114,7 +114,8 @@ python -m pytest backend/tests -q
 | `MYSQL_DATABASE` | For metadata | MySQL database name |
 | `FIN_AGENT_ADVISOR_MODE` | Optional | `deepagent` (default) / `pipeline` / `auto` |
 | `FIN_AGENT_RAG_ENABLED` | Optional | Enable Chroma retrieval (true/false) |
-| `FIN_AGENT_RETRIEVAL_MODE` | Optional | Retrieval strategy: `semantic` (default) / `bm25` (placeholder) / `hybrid` (≈ semantic) |
+| `FIN_AGENT_RETRIEVAL_MODE` | Optional | Retrieval strategy: `semantic` (default) / `bm25` (placeholder) / `hybrid` (semantic + BM25 shell) |
+| `FIN_AGENT_GRAPHRAG_ENABLED` | Optional | Enable GraphRAG expansion shell (true/false, default false) |
 | `FIN_AGENT_LLM_ENABLED` | Optional | Enable LLM (true/false) |
 | `FIN_AGENT_HOST` | Optional | Server host (default 127.0.0.1) |
 | `FIN_AGENT_PORT` | Optional | Server port (default 8010) |
@@ -183,13 +184,14 @@ SSE streaming supports `agent_id=auto` for automatic routing via `POST /api/debu
 | Module | Status | Notes |
 |--------|--------|-------|
 | AgentRouter | ✅ | 5 intents，关键词打分 + 优先级冲突解决，confidence/candidates |
-| RagPlanner | ✅ | Semantic queries；BM25/hybrid 预留 |
+| RagPlanner | ✅ | Semantic queries；BM25/hybrid/GraphRAG 预留 |
 | KnowledgeRetriever | ✅ | Chroma-first + mock fallback |
 | ComplianceGuard | ✅ | 20+ regex rules |
 | LLMProvider | ✅ | langchain-deepseek，deepseek-v4-flash |
 | ChromaStore | ✅ | 4 collections，PersistentClient |
 | SparseRetriever | ⚠️ | Interface defined，BM25Retriever placeholder |
-| HybridRetriever | ⚠️ | Arch shell，currently ≈ semantic |
+| HybridRetriever | ⚠️ | BM25 + semantic hybrid shell，currently ≈ semantic |
+| GraphRAGRetriever | ⚠️ | GraphRAG shell，reserved for entity/relation/path evidence expansion |
 | CollectionSelector | ✅ | Intent → collection 白名单 |
 | MySQL Metadata Store | ✅ | 3 tables，pymysql 直连 |
 | RAG Eval System | ✅ | 40 cases，Intent 95%，Recall@5 100% |
@@ -200,6 +202,35 @@ Dual-layer: **MySQL** (metadata) + **Chroma** (vectors).
 
 - MySQL: `knowledge_collections`, `knowledge_documents`, `knowledge_chunks`
 - Chroma: `advisory_knowledge`, `compliance_knowledge`, `education_knowledge`, `risk_knowledge`
+
+### RAG Implementation
+
+Current RAG chain:
+
+```text
+RagPlanner
+  -> CollectionSelector
+  -> KnowledgeRetriever
+  -> Chroma semantic retrieval
+  -> optional BM25 / Hybrid / GraphRAG shells
+  -> Evidence Pack
+  -> DeepAgent report
+```
+
+Implemented and validated:
+
+- Chroma semantic retrieval: main working retrieval path.
+- MySQL metadata layer: stores collection, document and chunk metadata.
+- Evidence Pack: injects retrieved sources into agent output.
+- CollectionSelector: maps intent to knowledge collections and supports cross-domain retrieval.
+
+Architecture shells reserved for extension:
+
+- BM25 sparse retrieval: `SparseRetriever` + `BM25Retriever` placeholder.
+- Hybrid retrieval: `HybridRetriever` merges semantic results with sparse results; currently sparse side is empty, so behavior is approximately semantic retrieval.
+- GraphRAG: `GraphRAGRetriever` placeholder, reserved for entity/relation/path-based evidence expansion. See `docs/graphrag.md`.
+
+GraphRAG can be used for relationship-heavy financial questions, such as company-risk-factor links, regulation-prohibited-expression links, financial-indicator-report-section links, and concept-learning-path links. Its role is to complement vector search by finding structured relationships rather than only semantically similar text.
 
 ```bash
 # Scan documents
@@ -254,7 +285,7 @@ python backend/scripts/debug_rag_evidence.py --cases ADV-001,CMP-001,EDU-001
 3. **前端**：五智能体统一工作台已完成前后端联调验证。支持"自动识别"模式（Router）和手动选择智能体模式。SSE 实时推理链展示（prepare + stream 双接口，EventSource 连接），默认流式运行、HTTP fallback。工具调用事件基于 tool_traces 补发（非瞬时事件），heartbeat 每 5s 显示 agent 仍在运行。仍为 MVP：tool_call 事件不是 DeepAgent 执行中即时发出。仍未完成会话历史、报告导出。
 4. **DeepAgent 预热**：五个智能体已全部补齐 factory 缓存（Lazy Cache）。当前仅投顾在 FastAPI startup 时预热，其余四个按首次请求 lazy-init（首次较慢但缓存后续请求）。后续可考虑分级预热策略。
 5. **vendor 依赖管理**：`backend/vendor/` 是当前阶段的工程兜底方案，后续可迁移为标准 pip 依赖管理。
-6. **RAG 增强**：已完成基础语义检索真实验收。source_type 映射已补齐（所有 canonical collection 映射完毕），collection selector 已扩展跨域覆盖。BM25/Hybrid Retrieval 架构壳子已预留（`FIN_AGENT_RETRIEVAL_MODE` 配置，`SparseRetriever`/`BM25Retriever`/`HybridRetriever` 类），但当前 BM25 为 placeholder（search 返回空），hybrid ≈ semantic。未来需实现真实 BM25 排序 + RRF 融合。文档质量评估、数据源采集与更新机制、大规模知识库扩展仍待增强。当前知识库规模有限（44 vectors/4 collections），复杂金融问题的覆盖能力受限。
+6. **RAG 增强**：已完成基础语义检索真实验收。source_type 映射已补齐（所有 canonical collection 映射完毕），collection selector 已扩展跨域覆盖。BM25/Hybrid Retrieval 架构壳子已预留（`FIN_AGENT_RETRIEVAL_MODE` 配置，`SparseRetriever`/`BM25Retriever`/`HybridRetriever` 类），GraphRAG 壳子也已预留（`FIN_AGENT_GRAPHRAG_ENABLED` 配置，`GraphRAGRetriever` 类）。当前 BM25 为 placeholder（search 返回空），hybrid ≈ semantic，GraphRAG 默认关闭且未接真实图数据库。未来需实现真实 BM25 排序、RRF 融合、实体关系抽取、图路径检索和图谱证据融合。文档质量评估、数据源采集与更新机制、大规模知识库扩展仍待增强。当前知识库规模有限（44 vectors/4 collections），复杂金融问题的覆盖能力受限。
 7. **DeepAgent 输出稳定性**：LLM 输出格式不完全稳定，已通过 validators、repair、fallback 三层兜底。财报分析真实复验通过（4/4 DA, 0 fallback），但 LLM 倾向于重复调用分析工具（7 个工具可能被调用 11-19 次），导致耗时偏高（46-67s）。"每个工具最多 1 次"约束 deepseek-v4-flash 不完全服从。
 8. **SSE 流式推理链**：已实现工具级瞬时事件流。`tool_started`/`tool_done`/`tool_failed` 在 DeepAgent 工具调用开始/成功/失败时实时推送（通过 `event_callback` 机制，`queue.Queue` 线程安全通信）。heartbeat 机制确保长请求期间前端显示运行中状态。EventSource 不支持 POST body，采用 prepare + stream 双接口。Pipeline fallback 时仍保留 legacy `tool_call` traces 补发。
 9. **Agent Router**：当前为 deterministic keyword scoring，不是 LLM router。复杂多意图问题可能路由不准。关键词权重和优先级规则需要随业务扩展持续调优。后续可加入 LLM rerank 或多智能体协作编排。

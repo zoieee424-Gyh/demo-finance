@@ -71,6 +71,10 @@ class Settings:
 
     _VALID_RETRIEVAL_MODES: set[str] = {"semantic", "bm25", "hybrid"}
 
+    # GraphRAG extension switch. Disabled by default because the MVP does not
+    # include a graph database or entity-relation index yet.
+    graphrag_enabled: bool = False
+
     # ── Advisor mode configuration ────────────────────────────────
 
     # Primary mode selector for the investment advisor.
@@ -131,6 +135,10 @@ class Settings:
             if mode in self._VALID_RETRIEVAL_MODES:
                 self.retrieval_mode = mode
             # Invalid values are silently ignored → stays "semantic"
+
+        env_graphrag = os.getenv("FIN_AGENT_GRAPHRAG_ENABLED")
+        if env_graphrag is not None:
+            self.graphrag_enabled = env_graphrag.lower() in ("1", "true", "yes", "on")
 
         env_cors = os.getenv("FIN_AGENT_CORS_ORIGINS")
         if env_cors:

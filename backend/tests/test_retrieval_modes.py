@@ -59,6 +59,13 @@ class TestRetrievalModeConfig:
         s = Settings()
         assert s.retrieval_mode == "hybrid"
 
+    def test_graphrag_env_switch(self, monkeypatch):
+        """FIN_AGENT_GRAPHRAG_ENABLED should enable GraphRAG expansion."""
+        monkeypatch.setenv("FIN_AGENT_GRAPHRAG_ENABLED", "true")
+        from app.core.config import Settings
+        s = Settings()
+        assert s.graphrag_enabled is True
+
 
 # ═══════════════════════════════════════════════════════════════════
 # BM25Retriever tests
@@ -212,6 +219,53 @@ class TestHybridRetriever:
         assert results[0].title == "Safe Doc"
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# GraphRAGRetriever tests
+# ─────────────────────────────────────────────────────────────────────────────
+class TestGraphRAGRetriever:
+    """Verify GraphRAG placeholder shell."""
+
+    def test_importable(self):
+        """GraphRAGRetriever should be importable."""
+        from app.rag.graph_retriever import GraphRAGRetriever
+        retriever = GraphRAGRetriever()
+        assert retriever is not None
+
+    def test_no_graph_store_returns_empty(self):
+        """Without graph_store, search() should return empty list."""
+        from app.rag.graph_retriever import GraphRAGRetriever
+        retriever = GraphRAGRetriever()
+        assert retriever.search("资产配置和风险关系", intent="advisory") == []
+
+    def test_fake_graph_store_results_to_sources(self):
+        """A future graph_store can return dicts converted to Source."""
+        from app.rag.graph_retriever import GraphRAGRetriever
+
+        class _FakeGraphStore:
+            def search(self, query, intent, top_k):
+                return [
+                    {
+                        "title": f"{intent}:{query}",
+                        "source_type": "graph_knowledge",
+                        "confidence": 0.77,
+                    }
+                ]
+
+        retriever = GraphRAGRetriever(graph_store=_FakeGraphStore())
+        results = retriever.search("适当性规则", intent="compliance", top_k=3)
+        assert len(results) == 1
+        assert isinstance(results[0], Source)
+        assert results[0].source_type == "graph_knowledge"
+        assert results[0].confidence == 0.77
+
+    def test_build_context(self):
+        """GraphRAG context object should preserve query and intent."""
+        from app.rag.graph_retriever import GraphRAGRetriever
+        ctx = GraphRAGRetriever.build_context("保证收益", intent="compliance")
+        assert ctx.query == "保证收益"
+        assert ctx.intent == "compliance"
+
+
 # ═══════════════════════════════════════════════════════════════════
 # KnowledgeRetriever mode dispatch tests
 # ═══════════════════════════════════════════════════════════════════
@@ -263,3 +317,20 @@ class TestRetrieverModeDispatch:
         ])
         assert len(results) >= 0  # Mock returns 2 for advisory
         assert all(isinstance(s, Source) for s in results)
+
+    def test_graphrag_disabled_by_default(self):
+        """KnowledgeRetriever should keep GraphRAG disabled by default."""
+        from app.rag.retriever import KnowledgeRetriever
+        kr = KnowledgeRetriever()
+        assert kr.graphrag_enabled is False
+
+    def test_graphrag_enabled_without_store_no_crash(self, monkeypatch):
+        """Enabled GraphRAG shell should not crash without graph_store."""
+        from app.core.config import settings
+        monkeypatch.setattr(settings, "graphrag_enabled", True)
+        from app.rag.retriever import KnowledgeRetriever
+        kr = KnowledgeRetriever()
+        results = kr._retrieve_graphrag_placeholder([
+            {"query": "关联风险", "source_type": "risk_models"},
+        ])
+        assert results == []
