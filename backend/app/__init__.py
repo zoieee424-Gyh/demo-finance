@@ -1,0 +1,2 @@
+"""Financial Agentic RAG backend."""
+

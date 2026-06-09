@@ -1,0 +1,421 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "created": "2026-06-06",
+    "description": "RAG retrieval quality evaluation cases for the智慧金融服务平台 knowledge base. Covers 4 collections with 40 cases including cross-domain and edge cases.",
+    "total_cases": 40,
+    "collections_covered": [
+      "advisory_knowledge",
+      "compliance_knowledge",
+      "education_knowledge",
+      "risk_knowledge"
+    ],
+    "thresholds": {
+      "top1_accuracy": 0.70,
+      "recall_at_5": 0.85,
+      "intent_accuracy": 0.90
+    }
+  },
+  "cases": [
+    {
+      "id": "ADV-001",
+      "query": "保守型投资者应该如何配置资产？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge"],
+      "expected_titles": ["资产配置基础原则", "风险等级与资产类别匹配"],
+      "difficulty": "easy",
+      "category": "asset_allocation",
+      "notes": "Direct query about conservative asset allocation. Should match primary advisory docs."
+    },
+    {
+      "id": "ADV-002",
+      "query": "定投有什么好处？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge"],
+      "expected_titles": ["基金定投常见原则"],
+      "difficulty": "easy",
+      "category": "dca",
+      "notes": "Direct query about DCA benefits."
+    },
+    {
+      "id": "ADV-003",
+      "query": "为什么要分散投资？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge"],
+      "expected_titles": ["分散化投资与资产相关性"],
+      "difficulty": "easy",
+      "category": "diversification",
+      "notes": "Direct query about diversification rationale."
+    },
+    {
+      "id": "ADV-004",
+      "query": "长期持有能赚钱吗？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge"],
+      "expected_titles": ["长期投资与复利效应"],
+      "difficulty": "medium",
+      "category": "long_term",
+      "notes": "Colloquial phrasing. '赚钱' could trigger compliance flags but should route to advisory for long-term investing."
+    },
+    {
+      "id": "ADV-005",
+      "query": "我月薪一万，想买房，怎么理财？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge"],
+      "expected_titles": ["资产配置基础原则"],
+      "difficulty": "medium",
+      "category": "goal_based",
+      "notes": "Colloquial user query with specific financial situation. Should match asset allocation."
+    },
+    {
+      "id": "ADV-006",
+      "query": "保守型投资者适合买什么？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge"],
+      "expected_titles": ["风险等级与资产类别匹配", "资产配置基础原则"],
+      "difficulty": "medium",
+      "category": "risk_matching",
+      "notes": "User asking what to buy. Should match risk-to-asset matching doc, not recommend specific products."
+    },
+    {
+      "id": "ADV-007",
+      "query": "资产之间相关性对投资组合有什么影响？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge"],
+      "expected_titles": ["分散化投资与资产相关性"],
+      "difficulty": "hard",
+      "category": "correlation",
+      "notes": "Domain-specific terminology. Requires semantic understanding beyond keyword match."
+    },
+    {
+      "id": "ADV-008",
+      "query": "再平衡是什么意思？怎么做再平衡？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge"],
+      "expected_titles": ["资产配置基础原则"],
+      "difficulty": "hard",
+      "category": "rebalancing",
+      "notes": "Rebalancing concept. May not have dedicated doc — tests knowledge gap."
+    },
+    {
+      "id": "ADV-009",
+      "query": "我今年30岁，准备养老需要多少钱，怎么开始投资？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge", "education_knowledge"],
+      "expected_titles": ["长期投资与复利效应", "资产配置基础原则"],
+      "difficulty": "medium",
+      "category": "retirement_planning",
+      "notes": "Life-goal query combining retirement planning with investment入门."
+    },
+    {
+      "id": "ADV-010",
+      "query": "工资不高但想理财，定投和一次性买入哪个好？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge"],
+      "expected_titles": ["基金定投常见原则"],
+      "difficulty": "hard",
+      "category": "dca_vs_lumpsum",
+      "notes": "Practical comparison query. DCA doc should be top result."
+    },
+    {
+      "id": "CMP-001",
+      "query": "投资建议有什么合规要求？",
+      "expected_intent": "compliance",
+      "expected_collections": ["compliance_knowledge"],
+      "expected_titles": ["投资建议合规边界"],
+      "difficulty": "easy",
+      "category": "compliance_basics",
+      "notes": "Direct query about compliance requirements for investment advice."
+    },
+    {
+      "id": "CMP-002",
+      "query": "能给我推荐几只股票吗？",
+      "expected_intent": "compliance",
+      "expected_collections": ["compliance_knowledge"],
+      "expected_titles": ["投资建议合规边界"],
+      "difficulty": "easy",
+      "category": "stock_tip_boundary",
+      "notes": "User asking for stock tips. Intent should route to compliance, not advisory."
+    },
+    {
+      "id": "CMP-003",
+      "query": "AI给出的投资建议靠谱吗？还需要自己判断吗？",
+      "expected_intent": "compliance",
+      "expected_collections": ["compliance_knowledge"],
+      "expected_titles": ["投资建议合规边界", "风险提示标准表达"],
+      "difficulty": "medium",
+      "category": "ai_advice_reliability",
+      "notes": "Question about AI advice reliability. Should trigger compliance + risk disclosure."
+    },
+    {
+      "id": "CMP-004",
+      "query": "什么是投资者适当性管理？",
+      "expected_intent": "compliance",
+      "expected_collections": ["compliance_knowledge"],
+      "expected_titles": ["投资者适当性管理规定概要"],
+      "difficulty": "easy",
+      "category": "investor_suitability",
+      "notes": "Direct query about investor suitability management."
+    },
+    {
+      "id": "CMP-005",
+      "query": "买基金之前，销售机构需要了解我的哪些信息？",
+      "expected_intent": "compliance",
+      "expected_collections": ["compliance_knowledge"],
+      "expected_titles": ["投资者适当性管理规定概要"],
+      "difficulty": "medium",
+      "category": "suitability_practical",
+      "notes": "Practical suitability question from investor perspective."
+    },
+    {
+      "id": "CMP-006",
+      "query": "如果投资亏钱了，销售机构有没有责任？",
+      "expected_intent": "compliance",
+      "expected_collections": ["compliance_knowledge"],
+      "expected_titles": ["投资者保护制度框架"],
+      "difficulty": "hard",
+      "category": "investor_protection",
+      "notes": "Legal-edge question about investor protection. Tests retrieval of protection framework."
+    },
+    {
+      "id": "CMP-007",
+      "query": "收益保证年化8%的产品能买吗？",
+      "expected_intent": "compliance",
+      "expected_collections": ["compliance_knowledge"],
+      "expected_titles": ["投资建议合规边界"],
+      "difficulty": "easy",
+      "category": "return_promise",
+      "notes": "Return promise detection. Must route to compliance for red-flag identification."
+    },
+    {
+      "id": "CMP-008",
+      "query": "监管部门如何保护中小投资者？",
+      "expected_intent": "compliance",
+      "expected_collections": ["compliance_knowledge"],
+      "expected_titles": ["投资者保护制度框架"],
+      "difficulty": "medium",
+      "category": "regulatory_protection",
+      "notes": "Question about regulatory investor protection mechanisms."
+    },
+    {
+      "id": "EDU-001",
+      "query": "什么是基金？",
+      "expected_intent": "education",
+      "expected_collections": ["education_knowledge"],
+      "expected_titles": ["什么是基金"],
+      "difficulty": "easy",
+      "category": "fund_basics",
+      "notes": "Most basic education query. Single clear match."
+    },
+    {
+      "id": "EDU-002",
+      "query": "指数基金和主动基金有什么区别？",
+      "expected_intent": "education",
+      "expected_collections": ["education_knowledge"],
+      "expected_titles": ["什么是宽基指数基金", "什么是基金"],
+      "difficulty": "medium",
+      "category": "index_vs_active",
+      "notes": "Comparison query about fund types."
+    },
+    {
+      "id": "EDU-003",
+      "query": "债券是什么？跟基金有什么不同？",
+      "expected_intent": "education",
+      "expected_collections": ["education_knowledge"],
+      "expected_titles": ["什么是债券", "什么是基金"],
+      "difficulty": "easy",
+      "category": "bond_vs_fund",
+      "notes": "Comparison between bonds and funds."
+    },
+    {
+      "id": "EDU-004",
+      "query": "基金净值怎么算的？",
+      "expected_intent": "education",
+      "expected_collections": ["education_knowledge"],
+      "expected_titles": ["基金净值与估值基础"],
+      "difficulty": "easy",
+      "category": "nav_calculation",
+      "notes": "Direct query about NAV calculation."
+    },
+    {
+      "id": "EDU-005",
+      "query": "我是小白，完全不懂投资，从哪开始学？",
+      "expected_intent": "education",
+      "expected_collections": ["education_knowledge"],
+      "expected_titles": ["什么是基金", "什么是宽基指数基金"],
+      "difficulty": "medium",
+      "category": "beginner_onboarding",
+      "notes": "Colloquial beginner query. Should return fundamental education docs."
+    },
+    {
+      "id": "EDU-006",
+      "query": "ETF和普通基金有什么区别？",
+      "expected_intent": "education",
+      "expected_collections": ["education_knowledge"],
+      "expected_titles": ["什么是基金", "什么是宽基指数基金"],
+      "difficulty": "hard",
+      "category": "etf_comparison",
+      "notes": "ETF-specific query. May not have dedicated ETF doc — tests knowledge gap for specific product type."
+    },
+    {
+      "id": "EDU-007",
+      "query": "市盈率市净率怎么看？",
+      "expected_intent": "education",
+      "expected_collections": ["education_knowledge"],
+      "expected_titles": ["基金净值与估值基础"],
+      "difficulty": "medium",
+      "category": "valuation_metrics",
+      "notes": "Valuation metrics query. May partially match valuation doc."
+    },
+    {
+      "id": "EDU-008",
+      "query": "买基金要看哪些指标？净值高的基金是不是更贵？",
+      "expected_intent": "education",
+      "expected_collections": ["education_knowledge"],
+      "expected_titles": ["基金净值与估值基础"],
+      "difficulty": "medium",
+      "category": "fund_selection",
+      "notes": "Practical fund selection question with common misconception about NAV."
+    },
+    {
+      "id": "RSK-001",
+      "query": "持仓太集中有什么风险？",
+      "expected_intent": "risk_control",
+      "expected_collections": ["risk_knowledge"],
+      "expected_titles": ["持仓集中度风险"],
+      "difficulty": "easy",
+      "category": "concentration_risk",
+      "notes": "Direct query about concentration risk."
+    },
+    {
+      "id": "RSK-002",
+      "query": "什么是流动性风险？",
+      "expected_intent": "risk_control",
+      "expected_collections": ["risk_knowledge"],
+      "expected_titles": ["流动性风险"],
+      "difficulty": "easy",
+      "category": "liquidity_risk",
+      "notes": "Direct query about liquidity risk definition."
+    },
+    {
+      "id": "RSK-003",
+      "query": "股票市场大跌怎么办？",
+      "expected_intent": "risk_control",
+      "expected_collections": ["risk_knowledge"],
+      "expected_titles": ["权益类资产波动风险", "市场风险与系统性风险"],
+      "difficulty": "medium",
+      "category": "market_crash",
+      "notes": "Colloquial panic query about market downturn."
+    },
+    {
+      "id": "RSK-004",
+      "query": "如何管理持仓集中度风险？",
+      "expected_intent": "risk_control",
+      "expected_collections": ["risk_knowledge"],
+      "expected_titles": ["持仓集中度风险"],
+      "difficulty": "easy",
+      "category": "concentration_management",
+      "notes": "Previously-fixed routing bug. Must route to risk_control, not advisory."
+    },
+    {
+      "id": "RSK-005",
+      "query": "什么是系统性风险和非系统性风险的区别？",
+      "expected_intent": "risk_control",
+      "expected_collections": ["risk_knowledge"],
+      "expected_titles": ["市场风险与系统性风险"],
+      "difficulty": "medium",
+      "category": "systematic_risk",
+      "notes": "Academic distinction between systematic and unsystematic risk."
+    },
+    {
+      "id": "RSK-006",
+      "query": "债券违约了怎么办？",
+      "expected_intent": "risk_control",
+      "expected_collections": ["risk_knowledge"],
+      "expected_titles": ["信用风险基础知识"],
+      "difficulty": "medium",
+      "category": "credit_risk",
+      "notes": "Credit/default risk query. Should match credit risk doc."
+    },
+    {
+      "id": "RSK-007",
+      "query": "最大回撤是什么？对我的投资有什么意义？",
+      "expected_intent": "risk_control",
+      "expected_collections": ["risk_knowledge"],
+      "expected_titles": ["权益类资产波动风险"],
+      "difficulty": "hard",
+      "category": "max_drawdown",
+      "notes": "Specific risk metric query. May be knowledge gap — no dedicated drawdown doc."
+    },
+    {
+      "id": "RSK-008",
+      "query": "什么是黑天鹅事件？对投资有什么影响？",
+      "expected_intent": "risk_control",
+      "expected_collections": ["risk_knowledge"],
+      "expected_titles": ["市场风险与系统性风险"],
+      "difficulty": "hard",
+      "category": "black_swan",
+      "notes": "Conceptual risk query. May partially match systematic risk doc."
+    },
+    {
+      "id": "XDM-001",
+      "query": "保守型投资者能买债券基金吗？风险大吗？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge", "education_knowledge", "risk_knowledge"],
+      "expected_titles": ["风险等级与资产类别匹配", "什么是债券"],
+      "difficulty": "hard",
+      "category": "cross_advisory_education_risk",
+      "notes": "Cross-domain: advisory (risk matching) + education (bond fund) + risk (risk assessment)."
+    },
+    {
+      "id": "XDM-002",
+      "query": "定投基金有风险吗？合规吗？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge", "compliance_knowledge", "risk_knowledge"],
+      "expected_titles": ["基金定投常见原则", "投资建议合规边界"],
+      "difficulty": "medium",
+      "category": "cross_advisory_compliance_risk",
+      "notes": "Cross-domain: advisory + compliance + risk. Simple triple-domain question."
+    },
+    {
+      "id": "XDM-003",
+      "query": "我想学理财，有什么风险需要注意？入门该看什么？",
+      "expected_intent": "education",
+      "expected_collections": ["education_knowledge", "risk_knowledge"],
+      "expected_titles": ["什么是基金", "持仓集中度风险"],
+      "difficulty": "medium",
+      "category": "cross_education_risk",
+      "notes": "Cross-domain: education + risk. Beginner asking for learning path and risk awareness."
+    },
+    {
+      "id": "XDM-004",
+      "query": "投资顾问给我推荐高收益产品，这合规吗？",
+      "expected_intent": "compliance",
+      "expected_collections": ["compliance_knowledge"],
+      "expected_titles": ["投资建议合规边界"],
+      "difficulty": "hard",
+      "category": "cross_compliance_advisory",
+      "notes": "Cross-domain: compliance + advisory. Tests whether compliance intent is correctly identified despite advisory keywords."
+    },
+    {
+      "id": "XDM-005",
+      "query": "如何在不违反监管规定的前提下做好分散投资？",
+      "expected_intent": "advisory",
+      "expected_collections": ["advisory_knowledge", "compliance_knowledge"],
+      "expected_titles": ["分散化投资与资产相关性", "投资建议合规边界"],
+      "difficulty": "hard",
+      "category": "cross_advisory_compliance",
+      "notes": "Cross-domain: advisory + compliance. Complex query about balancing diversification with regulatory compliance."
+    },
+    {
+      "id": "XDM-006",
+      "query": "市场下跌时应该卖出止损吗？这算不算追涨杀跌？",
+      "expected_intent": "risk_control",
+      "expected_collections": ["risk_knowledge", "advisory_knowledge"],
+      "expected_titles": ["权益类资产波动风险", "长期投资与复利效应"],
+      "difficulty": "hard",
+      "category": "cross_risk_advisory",
+      "notes": "Cross-domain: risk + advisory. Market timing vs long-term holding debate."
+    }
+  ]
+}

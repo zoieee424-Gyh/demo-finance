@@ -1,0 +1,2744 @@
+{
+  "meta": {
+    "timestamp": "2026-06-06T09:57:05.033378+00:00",
+    "python": "D:\\AI\\soft\\conda\\envs\\python3.11\\python.exe",
+    "top_k": 5,
+    "chroma_collections": 4,
+    "chroma_vectors": 44,
+    "thresholds": {
+      "top1_accuracy": 0.7,
+      "recall_at_k": 0.85,
+      "intent_accuracy": 0.9
+    }
+  },
+  "metrics": {
+    "total_cases": 40,
+    "intent_accuracy": 0.95,
+    "collection_coverage": 1.0,
+    "top1_accuracy": 0.7,
+    "recall_at_k": 0.925,
+    "mrr": 0.7863,
+    "intent_correct_count": 38,
+    "collection_correct_count": 40,
+    "top1_correct_count": 28,
+    "recall_correct_count": 37,
+    "by_intent": {
+      "advisory": {
+        "count": 13,
+        "intent_accuracy": 0.9230769230769231,
+        "collection_coverage": 1.0,
+        "top1_accuracy": 0.7692307692307693,
+        "recall_at_k": 0.9230769230769231,
+        "mrr": 0.8231
+      },
+      "compliance": {
+        "count": 9,
+        "intent_accuracy": 0.8888888888888888,
+        "collection_coverage": 1.0,
+        "top1_accuracy": 0.4444444444444444,
+        "recall_at_k": 1.0,
+        "mrr": 0.6574
+      },
+      "education": {
+        "count": 9,
+        "intent_accuracy": 1.0,
+        "collection_coverage": 1.0,
+        "top1_accuracy": 0.8888888888888888,
+        "recall_at_k": 0.8888888888888888,
+        "mrr": 0.8889
+      },
+      "risk_control": {
+        "count": 9,
+        "intent_accuracy": 1.0,
+        "collection_coverage": 1.0,
+        "top1_accuracy": 0.6666666666666666,
+        "recall_at_k": 0.8888888888888888,
+        "mrr": 0.7593
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "count": 13,
+        "intent_accuracy": 1.0,
+        "collection_coverage": 1.0,
+        "top1_accuracy": 0.8461538461538461,
+        "recall_at_k": 1.0,
+        "mrr": 0.9038
+      },
+      "hard": {
+        "count": 11,
+        "intent_accuracy": 1.0,
+        "collection_coverage": 1.0,
+        "top1_accuracy": 0.5454545454545454,
+        "recall_at_k": 0.9090909090909091,
+        "mrr": 0.6848
+      },
+      "medium": {
+        "count": 16,
+        "intent_accuracy": 0.875,
+        "collection_coverage": 1.0,
+        "top1_accuracy": 0.6875,
+        "recall_at_k": 0.875,
+        "mrr": 0.7604
+      }
+    },
+    "low_score_count": 4,
+    "low_score_items": [
+      {
+        "id": "ADV-005",
+        "query": "我月薪一万，想买房，怎么理财？",
+        "top1_title": "资产配置基础原则",
+        "top1_score": 0.4166,
+        "top1_correct": true
+      },
+      {
+        "id": "EDU-005",
+        "query": "我是小白，完全不懂投资，从哪开始学？",
+        "top1_title": "什么是基金",
+        "top1_score": 0.394,
+        "top1_correct": true
+      },
+      {
+        "id": "EDU-007",
+        "query": "市盈率市净率怎么看？",
+        "top1_title": "基金净值与估值基础",
+        "top1_score": 0.4264,
+        "top1_correct": true
+      },
+      {
+        "id": "RSK-003",
+        "query": "股票市场大跌怎么办？",
+        "top1_title": "投资者保护制度框架",
+        "top1_score": 0.4263,
+        "top1_correct": false
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "ADV-001",
+      "query": "保守型投资者应该如何配置资产？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge"
+      ],
+      "expected_titles": [
+        "资产配置基础原则",
+        "风险等级与资产类别匹配"
+      ],
+      "difficulty": "easy",
+      "category": "asset_allocation",
+      "actual_intent": "advisory",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "资产配置基础原则",
+          "score": 0.6494,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "资产配置模型说明",
+          "score": 0.6306,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "资产配置基础原则",
+          "score": 0.6238,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 4,
+          "title": "资产配置模型说明",
+          "score": 0.6048,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 5,
+          "title": "资产配置模型说明",
+          "score": 0.5913,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        }
+      ],
+      "top1_title": "资产配置基础原则",
+      "top1_score": 0.6494,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "ADV-002",
+      "query": "定投有什么好处？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge"
+      ],
+      "expected_titles": [
+        "基金定投常见原则"
+      ],
+      "difficulty": "easy",
+      "category": "dca",
+      "actual_intent": "advisory",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "基金定投常见原则",
+          "score": 0.6061,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "基金定投常见原则",
+          "score": 0.591,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "长期投资与复利效应",
+          "score": 0.5053,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 4,
+          "title": "长期投资与复利效应",
+          "score": 0.5003,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4842,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "基金定投常见原则",
+      "top1_score": 0.6061,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "ADV-003",
+      "query": "为什么要分散投资？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge"
+      ],
+      "expected_titles": [
+        "分散化投资与资产相关性"
+      ],
+      "difficulty": "easy",
+      "category": "diversification",
+      "actual_intent": "advisory",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "分散化投资与资产相关性",
+          "score": 0.7074,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "分散化投资与资产相关性",
+          "score": 0.6818,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "资产配置模型说明",
+          "score": 0.6471,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 4,
+          "title": "资产配置模型说明",
+          "score": 0.598,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 5,
+          "title": "长期投资与复利效应",
+          "score": 0.539,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        }
+      ],
+      "top1_title": "分散化投资与资产相关性",
+      "top1_score": 0.7074,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "ADV-004",
+      "query": "长期持有能赚钱吗？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge"
+      ],
+      "expected_titles": [
+        "长期投资与复利效应"
+      ],
+      "difficulty": "medium",
+      "category": "long_term",
+      "actual_intent": "advisory",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "长期投资与复利效应",
+          "score": 0.5193,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4457,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "资产配置基础原则",
+          "score": 0.4327,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 4,
+          "title": "长期投资与复利效应",
+          "score": 0.4289,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 5,
+          "title": "资产配置模型说明",
+          "score": 0.4006,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        }
+      ],
+      "top1_title": "长期投资与复利效应",
+      "top1_score": 0.5193,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "ADV-005",
+      "query": "我月薪一万，想买房，怎么理财？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge"
+      ],
+      "expected_titles": [
+        "资产配置基础原则"
+      ],
+      "difficulty": "medium",
+      "category": "goal_based",
+      "actual_intent": "advisory",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "资产配置基础原则",
+          "score": 0.4166,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "资产配置模型说明",
+          "score": 0.4025,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.3932,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "资产配置模型说明",
+          "score": 0.3787,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 5,
+          "title": "什么是基金",
+          "score": 0.364,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        }
+      ],
+      "top1_title": "资产配置基础原则",
+      "top1_score": 0.4166,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "ADV-006",
+      "query": "保守型投资者适合买什么？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge"
+      ],
+      "expected_titles": [
+        "风险等级与资产类别匹配",
+        "资产配置基础原则"
+      ],
+      "difficulty": "medium",
+      "category": "risk_matching",
+      "actual_intent": "advisory",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "资产配置模型说明",
+          "score": 0.5571,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "资产配置模型说明",
+          "score": 0.5449,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "长期投资与复利效应",
+          "score": 0.5404,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5305,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5103,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "资产配置模型说明",
+      "top1_score": 0.5571,
+      "top1_correct": false,
+      "recall_correct": false,
+      "first_hit_rank": null,
+      "errors": []
+    },
+    {
+      "id": "ADV-007",
+      "query": "资产之间相关性对投资组合有什么影响？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge"
+      ],
+      "expected_titles": [
+        "分散化投资与资产相关性"
+      ],
+      "difficulty": "hard",
+      "category": "correlation",
+      "actual_intent": "advisory",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "分散化投资与资产相关性",
+          "score": 0.7258,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "分散化投资与资产相关性",
+          "score": 0.607,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "资产配置模型说明",
+          "score": 0.5246,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 4,
+          "title": "资产配置基础原则",
+          "score": 0.4955,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4834,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "分散化投资与资产相关性",
+      "top1_score": 0.7258,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "ADV-008",
+      "query": "再平衡是什么意思？怎么做再平衡？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge"
+      ],
+      "expected_titles": [
+        "资产配置基础原则"
+      ],
+      "difficulty": "hard",
+      "category": "rebalancing",
+      "actual_intent": "advisory",
+      "secondary_intents": [
+        "education"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "资产配置模型说明",
+          "score": 0.7325,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "资产配置模型说明",
+          "score": 0.6582,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4976,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "资产配置模型说明",
+          "score": 0.4883,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 5,
+          "title": "资产配置基础原则",
+          "score": 0.4796,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        }
+      ],
+      "top1_title": "资产配置模型说明",
+      "top1_score": 0.7325,
+      "top1_correct": false,
+      "recall_correct": true,
+      "first_hit_rank": 5,
+      "errors": []
+    },
+    {
+      "id": "ADV-009",
+      "query": "我今年30岁，准备养老需要多少钱，怎么开始投资？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge",
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "长期投资与复利效应",
+        "资产配置基础原则"
+      ],
+      "difficulty": "medium",
+      "category": "retirement_planning",
+      "actual_intent": "advisory",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "长期投资与复利效应",
+          "score": 0.459,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4543,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "资产配置基础原则",
+          "score": 0.4229,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4153,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4115,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "长期投资与复利效应",
+      "top1_score": 0.459,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "ADV-010",
+      "query": "工资不高但想理财，定投和一次性买入哪个好？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge"
+      ],
+      "expected_titles": [
+        "基金定投常见原则"
+      ],
+      "difficulty": "hard",
+      "category": "dca_vs_lumpsum",
+      "actual_intent": "advisory",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "基金定投常见原则",
+          "score": 0.554,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "基金定投常见原则",
+          "score": 0.5063,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4947,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "资产配置模型说明",
+          "score": 0.4939,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 5,
+          "title": "长期投资与复利效应",
+          "score": 0.4802,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        }
+      ],
+      "top1_title": "基金定投常见原则",
+      "top1_score": 0.554,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "CMP-001",
+      "query": "投资建议有什么合规要求？",
+      "expected_intent": "compliance",
+      "expected_collections": [
+        "compliance_knowledge"
+      ],
+      "expected_titles": [
+        "投资建议合规边界"
+      ],
+      "difficulty": "easy",
+      "category": "compliance_basics",
+      "actual_intent": "compliance",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资建议合规边界",
+          "score": 0.7184,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "投资者适当性管理规定概要",
+          "score": 0.6466,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.6307,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.626,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.6007,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "投资建议合规边界",
+      "top1_score": 0.7184,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "CMP-002",
+      "query": "能给我推荐几只股票吗？",
+      "expected_intent": "compliance",
+      "expected_collections": [
+        "compliance_knowledge"
+      ],
+      "expected_titles": [
+        "投资建议合规边界"
+      ],
+      "difficulty": "easy",
+      "category": "stock_tip_boundary",
+      "actual_intent": "compliance",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4849,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "投资建议合规边界",
+          "score": 0.4511,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4416,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.3999,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.3977,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "投资顾问合规边界与风险揭示",
+      "top1_score": 0.4849,
+      "top1_correct": false,
+      "recall_correct": true,
+      "first_hit_rank": 2,
+      "errors": []
+    },
+    {
+      "id": "CMP-003",
+      "query": "AI给出的投资建议靠谱吗？还需要自己判断吗？",
+      "expected_intent": "compliance",
+      "expected_collections": [
+        "compliance_knowledge"
+      ],
+      "expected_titles": [
+        "投资建议合规边界",
+        "风险提示标准表达"
+      ],
+      "difficulty": "medium",
+      "category": "ai_advice_reliability",
+      "actual_intent": "advisory",
+      "secondary_intents": [
+        "compliance"
+      ],
+      "intent_correct": false,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.6403,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.6074,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "投资建议合规边界",
+          "score": 0.5972,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5829,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5536,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "投资顾问合规边界与风险揭示",
+      "top1_score": 0.6403,
+      "top1_correct": false,
+      "recall_correct": true,
+      "first_hit_rank": 3,
+      "errors": []
+    },
+    {
+      "id": "CMP-004",
+      "query": "什么是投资者适当性管理？",
+      "expected_intent": "compliance",
+      "expected_collections": [
+        "compliance_knowledge"
+      ],
+      "expected_titles": [
+        "投资者适当性管理规定概要"
+      ],
+      "difficulty": "easy",
+      "category": "investor_suitability",
+      "actual_intent": "compliance",
+      "secondary_intents": [
+        "education"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "compliance_knowledge",
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资者适当性管理规定概要",
+          "score": 0.826,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "投资者适当性管理规定概要",
+          "score": 0.7354,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.7142,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资者保护制度框架",
+          "score": 0.5392,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资者保护制度框架",
+          "score": 0.5184,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "投资者适当性管理规定概要",
+      "top1_score": 0.826,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "CMP-005",
+      "query": "买基金之前，销售机构需要了解我的哪些信息？",
+      "expected_intent": "compliance",
+      "expected_collections": [
+        "compliance_knowledge"
+      ],
+      "expected_titles": [
+        "投资者适当性管理规定概要"
+      ],
+      "difficulty": "medium",
+      "category": "suitability_practical",
+      "actual_intent": "compliance",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5954,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5587,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "投资者适当性管理规定概要",
+          "score": 0.5424,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5321,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4993,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "投资顾问合规边界与风险揭示",
+      "top1_score": 0.5954,
+      "top1_correct": false,
+      "recall_correct": true,
+      "first_hit_rank": 3,
+      "errors": []
+    },
+    {
+      "id": "CMP-006",
+      "query": "如果投资亏钱了，销售机构有没有责任？",
+      "expected_intent": "compliance",
+      "expected_collections": [
+        "compliance_knowledge"
+      ],
+      "expected_titles": [
+        "投资者保护制度框架"
+      ],
+      "difficulty": "hard",
+      "category": "investor_protection",
+      "actual_intent": "compliance",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资者保护制度框架",
+          "score": 0.5801,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5372,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5358,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5261,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资者适当性管理规定概要",
+          "score": 0.4977,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "投资者保护制度框架",
+      "top1_score": 0.5801,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "CMP-007",
+      "query": "收益保证年化8%的产品能买吗？",
+      "expected_intent": "compliance",
+      "expected_collections": [
+        "compliance_knowledge"
+      ],
+      "expected_titles": [
+        "投资建议合规边界"
+      ],
+      "difficulty": "easy",
+      "category": "return_promise",
+      "actual_intent": "compliance",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.6394,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.541,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5188,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资建议合规边界",
+          "score": 0.4929,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4927,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "投资顾问合规边界与风险揭示",
+      "top1_score": 0.6394,
+      "top1_correct": false,
+      "recall_correct": true,
+      "first_hit_rank": 4,
+      "errors": []
+    },
+    {
+      "id": "CMP-008",
+      "query": "监管部门如何保护中小投资者？",
+      "expected_intent": "compliance",
+      "expected_collections": [
+        "compliance_knowledge"
+      ],
+      "expected_titles": [
+        "投资者保护制度框架"
+      ],
+      "difficulty": "medium",
+      "category": "regulatory_protection",
+      "actual_intent": "compliance",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资者保护制度框架",
+          "score": 0.7213,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "投资者保护制度框架",
+          "score": 0.6888,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "投资者适当性管理规定概要",
+          "score": 0.5863,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资者适当性管理规定概要",
+          "score": 0.552,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资建议合规边界",
+          "score": 0.4454,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "投资者保护制度框架",
+      "top1_score": 0.7213,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "EDU-001",
+      "query": "什么是基金？",
+      "expected_intent": "education",
+      "expected_collections": [
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "什么是基金"
+      ],
+      "difficulty": "easy",
+      "category": "fund_basics",
+      "actual_intent": "education",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "什么是基金",
+          "score": 0.7544,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 2,
+          "title": "什么是基金",
+          "score": 0.7188,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 3,
+          "title": "什么是宽基指数基金",
+          "score": 0.5781,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 4,
+          "title": "基金净值与估值基础",
+          "score": 0.5586,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 5,
+          "title": "基金净值与估值基础",
+          "score": 0.5545,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        }
+      ],
+      "top1_title": "什么是基金",
+      "top1_score": 0.7544,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "EDU-002",
+      "query": "指数基金和主动基金有什么区别？",
+      "expected_intent": "education",
+      "expected_collections": [
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "什么是宽基指数基金",
+        "什么是基金"
+      ],
+      "difficulty": "medium",
+      "category": "index_vs_active",
+      "actual_intent": "education",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "什么是宽基指数基金",
+          "score": 0.6074,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 2,
+          "title": "什么是宽基指数基金",
+          "score": 0.6048,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 3,
+          "title": "什么是基金",
+          "score": 0.565,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 4,
+          "title": "什么是基金",
+          "score": 0.5369,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 5,
+          "title": "基金净值与估值基础",
+          "score": 0.4689,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        }
+      ],
+      "top1_title": "什么是宽基指数基金",
+      "top1_score": 0.6074,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "EDU-003",
+      "query": "债券是什么？跟基金有什么不同？",
+      "expected_intent": "education",
+      "expected_collections": [
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "什么是债券",
+        "什么是基金"
+      ],
+      "difficulty": "easy",
+      "category": "bond_vs_fund",
+      "actual_intent": "education",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "什么是债券",
+          "score": 0.61,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 2,
+          "title": "什么是基金",
+          "score": 0.6008,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 3,
+          "title": "什么是债券",
+          "score": 0.5964,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 4,
+          "title": "什么是宽基指数基金",
+          "score": 0.5343,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 5,
+          "title": "什么是基金",
+          "score": 0.5199,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        }
+      ],
+      "top1_title": "什么是债券",
+      "top1_score": 0.61,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "EDU-004",
+      "query": "基金净值怎么算的？",
+      "expected_intent": "education",
+      "expected_collections": [
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "基金净值与估值基础"
+      ],
+      "difficulty": "easy",
+      "category": "nav_calculation",
+      "actual_intent": "education",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "基金净值与估值基础",
+          "score": 0.7651,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 2,
+          "title": "基金净值与估值基础",
+          "score": 0.6401,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 3,
+          "title": "什么是基金",
+          "score": 0.4926,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 4,
+          "title": "什么是基金",
+          "score": 0.4365,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 5,
+          "title": "什么是宽基指数基金",
+          "score": 0.3774,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        }
+      ],
+      "top1_title": "基金净值与估值基础",
+      "top1_score": 0.7651,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "EDU-005",
+      "query": "我是小白，完全不懂投资，从哪开始学？",
+      "expected_intent": "education",
+      "expected_collections": [
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "什么是基金",
+        "什么是宽基指数基金"
+      ],
+      "difficulty": "medium",
+      "category": "beginner_onboarding",
+      "actual_intent": "education",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "什么是基金",
+          "score": 0.394,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 2,
+          "title": "什么是宽基指数基金",
+          "score": 0.3653,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 3,
+          "title": "什么是债券",
+          "score": 0.3534,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 4,
+          "title": "基金净值与估值基础",
+          "score": 0.3458,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 5,
+          "title": "基金净值与估值基础",
+          "score": 0.3172,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        }
+      ],
+      "top1_title": "什么是基金",
+      "top1_score": 0.394,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "EDU-006",
+      "query": "ETF和普通基金有什么区别？",
+      "expected_intent": "education",
+      "expected_collections": [
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "什么是基金",
+        "什么是宽基指数基金"
+      ],
+      "difficulty": "hard",
+      "category": "etf_comparison",
+      "actual_intent": "education",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "什么是基金",
+          "score": 0.6092,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 2,
+          "title": "什么是宽基指数基金",
+          "score": 0.5553,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 3,
+          "title": "什么是基金",
+          "score": 0.5409,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 4,
+          "title": "什么是宽基指数基金",
+          "score": 0.5189,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 5,
+          "title": "基金净值与估值基础",
+          "score": 0.4963,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        }
+      ],
+      "top1_title": "什么是基金",
+      "top1_score": 0.6092,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "EDU-007",
+      "query": "市盈率市净率怎么看？",
+      "expected_intent": "education",
+      "expected_collections": [
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "基金净值与估值基础"
+      ],
+      "difficulty": "medium",
+      "category": "valuation_metrics",
+      "actual_intent": "education",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "基金净值与估值基础",
+          "score": 0.4264,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 2,
+          "title": "基金净值与估值基础",
+          "score": 0.4114,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 3,
+          "title": "什么是债券",
+          "score": 0.3247,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 4,
+          "title": "什么是宽基指数基金",
+          "score": 0.3225,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 5,
+          "title": "什么是宽基指数基金",
+          "score": 0.2975,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        }
+      ],
+      "top1_title": "基金净值与估值基础",
+      "top1_score": 0.4264,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "EDU-008",
+      "query": "买基金要看哪些指标？净值高的基金是不是更贵？",
+      "expected_intent": "education",
+      "expected_collections": [
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "基金净值与估值基础"
+      ],
+      "difficulty": "medium",
+      "category": "fund_selection",
+      "actual_intent": "education",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "基金净值与估值基础",
+          "score": 0.5974,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 2,
+          "title": "什么是基金",
+          "score": 0.593,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 3,
+          "title": "基金净值与估值基础",
+          "score": 0.5927,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 4,
+          "title": "什么是宽基指数基金",
+          "score": 0.5203,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 5,
+          "title": "什么是基金",
+          "score": 0.5141,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        }
+      ],
+      "top1_title": "基金净值与估值基础",
+      "top1_score": 0.5974,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "RSK-001",
+      "query": "持仓太集中有什么风险？",
+      "expected_intent": "risk_control",
+      "expected_collections": [
+        "risk_knowledge"
+      ],
+      "expected_titles": [
+        "持仓集中度风险"
+      ],
+      "difficulty": "easy",
+      "category": "concentration_risk",
+      "actual_intent": "risk_control",
+      "secondary_intents": [
+        "advisory"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "risk_knowledge",
+        "compliance_knowledge",
+        "advisory_knowledge",
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "持仓集中度风险",
+          "score": 0.7441,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 2,
+          "title": "分散化投资与资产相关性",
+          "score": 0.5371,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "市场风险与系统性风险",
+          "score": 0.5248,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 4,
+          "title": "权益类资产波动风险",
+          "score": 0.523,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5086,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "持仓集中度风险",
+      "top1_score": 0.7441,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "RSK-002",
+      "query": "什么是流动性风险？",
+      "expected_intent": "risk_control",
+      "expected_collections": [
+        "risk_knowledge"
+      ],
+      "expected_titles": [
+        "流动性风险"
+      ],
+      "difficulty": "easy",
+      "category": "liquidity_risk",
+      "actual_intent": "risk_control",
+      "secondary_intents": [
+        "education"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "risk_knowledge",
+        "compliance_knowledge",
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "流动性风险",
+          "score": 0.7587,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 2,
+          "title": "市场风险与系统性风险",
+          "score": 0.5596,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 3,
+          "title": "市场风险与系统性风险",
+          "score": 0.5316,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 4,
+          "title": "信用风险基础知识",
+          "score": 0.5267,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 5,
+          "title": "风险提示标准表达",
+          "score": 0.5051,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "流动性风险",
+      "top1_score": 0.7587,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "RSK-003",
+      "query": "股票市场大跌怎么办？",
+      "expected_intent": "risk_control",
+      "expected_collections": [
+        "risk_knowledge"
+      ],
+      "expected_titles": [
+        "权益类资产波动风险",
+        "市场风险与系统性风险"
+      ],
+      "difficulty": "medium",
+      "category": "market_crash",
+      "actual_intent": "risk_control",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "risk_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资者保护制度框架",
+          "score": 0.4263,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "市场风险与系统性风险",
+          "score": 0.405,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.3788,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "权益类资产波动风险",
+          "score": 0.363,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 5,
+          "title": "市场风险与系统性风险",
+          "score": 0.3492,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        }
+      ],
+      "top1_title": "投资者保护制度框架",
+      "top1_score": 0.4263,
+      "top1_correct": false,
+      "recall_correct": true,
+      "first_hit_rank": 2,
+      "errors": []
+    },
+    {
+      "id": "RSK-004",
+      "query": "如何管理持仓集中度风险？",
+      "expected_intent": "risk_control",
+      "expected_collections": [
+        "risk_knowledge"
+      ],
+      "expected_titles": [
+        "持仓集中度风险"
+      ],
+      "difficulty": "easy",
+      "category": "concentration_management",
+      "actual_intent": "risk_control",
+      "secondary_intents": [
+        "advisory"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "risk_knowledge",
+        "compliance_knowledge",
+        "advisory_knowledge",
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "持仓集中度风险",
+          "score": 0.8493,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 2,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5228,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "风险提示标准表达",
+          "score": 0.5116,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4888,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "资产配置模型说明",
+          "score": 0.4857,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        }
+      ],
+      "top1_title": "持仓集中度风险",
+      "top1_score": 0.8493,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "RSK-005",
+      "query": "什么是系统性风险和非系统性风险的区别？",
+      "expected_intent": "risk_control",
+      "expected_collections": [
+        "risk_knowledge"
+      ],
+      "expected_titles": [
+        "市场风险与系统性风险"
+      ],
+      "difficulty": "medium",
+      "category": "systematic_risk",
+      "actual_intent": "risk_control",
+      "secondary_intents": [
+        "education"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "risk_knowledge",
+        "compliance_knowledge",
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "市场风险与系统性风险",
+          "score": 0.8116,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 2,
+          "title": "市场风险与系统性风险",
+          "score": 0.6171,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 3,
+          "title": "投资者风险画像与适当性规则",
+          "score": 0.5965,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 4,
+          "title": "持仓集中度风险",
+          "score": 0.5509,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 5,
+          "title": "投资者风险画像与适当性规则",
+          "score": 0.5294,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        }
+      ],
+      "top1_title": "市场风险与系统性风险",
+      "top1_score": 0.8116,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "RSK-006",
+      "query": "债券违约了怎么办？",
+      "expected_intent": "risk_control",
+      "expected_collections": [
+        "risk_knowledge"
+      ],
+      "expected_titles": [
+        "信用风险基础知识"
+      ],
+      "difficulty": "medium",
+      "category": "credit_risk",
+      "actual_intent": "risk_control",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "risk_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "信用风险基础知识",
+          "score": 0.4953,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 2,
+          "title": "信用风险基础知识",
+          "score": 0.4856,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 3,
+          "title": "投资者保护制度框架",
+          "score": 0.4274,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.3936,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.3921,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "信用风险基础知识",
+      "top1_score": 0.4953,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "RSK-007",
+      "query": "最大回撤是什么？对我的投资有什么意义？",
+      "expected_intent": "risk_control",
+      "expected_collections": [
+        "risk_knowledge"
+      ],
+      "expected_titles": [
+        "权益类资产波动风险"
+      ],
+      "difficulty": "hard",
+      "category": "max_drawdown",
+      "actual_intent": "risk_control",
+      "secondary_intents": [
+        "education"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "risk_knowledge",
+        "compliance_knowledge",
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5056,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4935,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "持仓集中度风险",
+          "score": 0.4874,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 4,
+          "title": "投资者风险画像与适当性规则",
+          "score": 0.4874,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4803,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "投资顾问合规边界与风险揭示",
+      "top1_score": 0.5056,
+      "top1_correct": false,
+      "recall_correct": false,
+      "first_hit_rank": null,
+      "errors": []
+    },
+    {
+      "id": "RSK-008",
+      "query": "什么是黑天鹅事件？对投资有什么影响？",
+      "expected_intent": "risk_control",
+      "expected_collections": [
+        "risk_knowledge"
+      ],
+      "expected_titles": [
+        "市场风险与系统性风险"
+      ],
+      "difficulty": "hard",
+      "category": "black_swan",
+      "actual_intent": "risk_control",
+      "secondary_intents": [
+        "education"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "risk_knowledge",
+        "compliance_knowledge",
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "市场风险与系统性风险",
+          "score": 0.4649,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 2,
+          "title": "投资者风险画像与适当性规则",
+          "score": 0.4284,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 3,
+          "title": "市场风险与系统性风险",
+          "score": 0.42,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 4,
+          "title": "投资者风险画像与适当性规则",
+          "score": 0.4109,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 5,
+          "title": "权益类资产波动风险",
+          "score": 0.4106,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        }
+      ],
+      "top1_title": "市场风险与系统性风险",
+      "top1_score": 0.4649,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "XDM-001",
+      "query": "保守型投资者能买债券基金吗？风险大吗？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge",
+        "risk_knowledge",
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "风险等级与资产类别匹配",
+        "什么是债券"
+      ],
+      "difficulty": "hard",
+      "category": "cross_advisory_education_risk",
+      "actual_intent": "advisory",
+      "secondary_intents": [
+        "risk_control"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge",
+        "risk_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "信用风险基础知识",
+          "score": 0.5452,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 2,
+          "title": "什么是债券",
+          "score": 0.5366,
+          "collection": "education_knowledge",
+          "source_type": "financial_education"
+        },
+        {
+          "rank": 3,
+          "title": "信用风险基础知识",
+          "score": 0.5231,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5214,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5186,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "信用风险基础知识",
+      "top1_score": 0.5452,
+      "top1_correct": false,
+      "recall_correct": true,
+      "first_hit_rank": 2,
+      "errors": []
+    },
+    {
+      "id": "XDM-002",
+      "query": "定投基金有风险吗？合规吗？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge",
+        "compliance_knowledge",
+        "risk_knowledge"
+      ],
+      "expected_titles": [
+        "基金定投常见原则",
+        "投资建议合规边界"
+      ],
+      "difficulty": "medium",
+      "category": "cross_advisory_compliance_risk",
+      "actual_intent": "compliance",
+      "secondary_intents": [
+        "advisory",
+        "risk_control"
+      ],
+      "intent_correct": false,
+      "selected_collections": [
+        "compliance_knowledge",
+        "advisory_knowledge",
+        "education_knowledge",
+        "risk_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "基金定投常见原则",
+          "score": 0.6473,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "基金定投常见原则",
+          "score": 0.6242,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5966,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5837,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5691,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "基金定投常见原则",
+      "top1_score": 0.6473,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "XDM-003",
+      "query": "我想学理财，有什么风险需要注意？入门该看什么？",
+      "expected_intent": "education",
+      "expected_collections": [
+        "risk_knowledge",
+        "education_knowledge"
+      ],
+      "expected_titles": [
+        "什么是基金",
+        "持仓集中度风险"
+      ],
+      "difficulty": "medium",
+      "category": "cross_education_risk",
+      "actual_intent": "education",
+      "secondary_intents": [
+        "advisory",
+        "risk_control"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "education_knowledge",
+        "advisory_knowledge",
+        "compliance_knowledge",
+        "risk_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "长期投资与复利效应",
+          "score": 0.5605,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "投资者风险画像与适当性规则",
+          "score": 0.5513,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 3,
+          "title": "市场风险与系统性风险",
+          "score": 0.5502,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 4,
+          "title": "信用风险基础知识",
+          "score": 0.5427,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 5,
+          "title": "流动性风险",
+          "score": 0.5309,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        }
+      ],
+      "top1_title": "长期投资与复利效应",
+      "top1_score": 0.5605,
+      "top1_correct": false,
+      "recall_correct": false,
+      "first_hit_rank": null,
+      "errors": []
+    },
+    {
+      "id": "XDM-004",
+      "query": "投资顾问给我推荐高收益产品，这合规吗？",
+      "expected_intent": "compliance",
+      "expected_collections": [
+        "compliance_knowledge"
+      ],
+      "expected_titles": [
+        "投资建议合规边界"
+      ],
+      "difficulty": "hard",
+      "category": "cross_compliance_advisory",
+      "actual_intent": "compliance",
+      "secondary_intents": [],
+      "intent_correct": true,
+      "selected_collections": [
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.6774,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 2,
+          "title": "投资建议合规边界",
+          "score": 0.6757,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 3,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.6391,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.6317,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.6125,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "投资顾问合规边界与风险揭示",
+      "top1_score": 0.6774,
+      "top1_correct": false,
+      "recall_correct": true,
+      "first_hit_rank": 2,
+      "errors": []
+    },
+    {
+      "id": "XDM-005",
+      "query": "如何在不违反监管规定的前提下做好分散投资？",
+      "expected_intent": "advisory",
+      "expected_collections": [
+        "advisory_knowledge",
+        "compliance_knowledge"
+      ],
+      "expected_titles": [
+        "分散化投资与资产相关性",
+        "投资建议合规边界"
+      ],
+      "difficulty": "hard",
+      "category": "cross_advisory_compliance",
+      "actual_intent": "advisory",
+      "secondary_intents": [
+        "compliance"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "advisory_knowledge",
+        "education_knowledge",
+        "compliance_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "分散化投资与资产相关性",
+          "score": 0.6974,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "资产配置模型说明",
+          "score": 0.6658,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 3,
+          "title": "分散化投资与资产相关性",
+          "score": 0.6617,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.5564,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "资产配置模型说明",
+          "score": 0.5557,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        }
+      ],
+      "top1_title": "分散化投资与资产相关性",
+      "top1_score": 0.6974,
+      "top1_correct": true,
+      "recall_correct": true,
+      "first_hit_rank": 1,
+      "errors": []
+    },
+    {
+      "id": "XDM-006",
+      "query": "市场下跌时应该卖出止损吗？这算不算追涨杀跌？",
+      "expected_intent": "risk_control",
+      "expected_collections": [
+        "advisory_knowledge",
+        "risk_knowledge"
+      ],
+      "expected_titles": [
+        "权益类资产波动风险",
+        "长期投资与复利效应"
+      ],
+      "difficulty": "hard",
+      "category": "cross_risk_advisory",
+      "actual_intent": "risk_control",
+      "secondary_intents": [
+        "advisory"
+      ],
+      "intent_correct": true,
+      "selected_collections": [
+        "risk_knowledge",
+        "compliance_knowledge",
+        "advisory_knowledge",
+        "education_knowledge"
+      ],
+      "collection_correct": true,
+      "top_results": [
+        {
+          "rank": 1,
+          "title": "基金定投常见原则",
+          "score": 0.4521,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 2,
+          "title": "市场风险与系统性风险",
+          "score": 0.4244,
+          "collection": "risk_knowledge",
+          "source_type": "risk_models"
+        },
+        {
+          "rank": 3,
+          "title": "长期投资与复利效应",
+          "score": 0.4237,
+          "collection": "advisory_knowledge",
+          "source_type": "investment_knowledge"
+        },
+        {
+          "rank": 4,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4167,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        },
+        {
+          "rank": 5,
+          "title": "投资顾问合规边界与风险揭示",
+          "score": 0.4099,
+          "collection": "compliance_knowledge",
+          "source_type": "regulations"
+        }
+      ],
+      "top1_title": "基金定投常见原则",
+      "top1_score": 0.4521,
+      "top1_correct": false,
+      "recall_correct": true,
+      "first_hit_rank": 3,
+      "errors": []
+    }
+  ]
+}
