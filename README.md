@@ -1,0 +1,220 @@
+# 智慧金融服务平台
+
+基于 Agentic RAG 与多智能体协作的智慧金融服务平台，面向智能投顾、财报分析、风控审查、监管合规、金融科普五类业务场景。
+
+当前核心架构：**DeepAgent-first**——每个智能体以 DeepAgent 为主脑，pipeline 仅作为 fallback 或显式可选模式。
+
+## Architecture
+
+- `backend/`: FastAPI 服务，承载 API、DeepAgent 编排、确定性工具模块、RAG、合规校验、统一 Agent Router。
+- `frontend/`: Vue3 + Element Plus 前端。五智能体统一工作台，五个 debug endpoint 已接入页面，支持自动识别（Router）、左侧智能体导航、任务输入、样例报告、真实报告展示、工具轨迹、证据来源、运行信息和 SSE 推理链 MVP；会话历史、报告导出、工具级瞬时事件流、WebSocket 尚未完成。
+- `data/`: 本地样例数据、知识库原始材料、Chroma 向量库持久化目录、策略配置。
+- `docs/`: 架构、接口、决策记录和协作协议。
+- `scripts/`: 数据导入、索引构建、检查脚本、DeepAgent 调试脚本。
+- `backend/vendor/`: deepagents 及相关依赖的本地安装，避免 conda/user site-packages 不一致导致 import 失败。
+
+## Quick Start
+
+### One-click Local Demo
+
+Windows:
+
+```bat
+start_finance_agent.bat
+```
+
+The script starts the FastAPI backend at `http://127.0.0.1:8010`, starts the Vite frontend at `http://127.0.0.1:5173`, prepares project-local `.tmp`, and opens the frontend in your browser.
+
+### Backend
+
+Requires Python 3.11 (recommended conda environment: `python3.11`).
+
+```bash
+# Install dependencies
+pip install -r backend/requirements.txt
+
+# Start server (default: http://127.0.0.1:8010)
+python backend/app/main.py
+```
+
+Environment variables `FIN_AGENT_HOST` and `FIN_AGENT_PORT` can override host/port.
+
+The API is served at `http://127.0.0.1:8010/api`. When `frontend/dist/` exists, the server also serves the frontend at the root path.
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev       # Vite dev server at :5173, proxies /api to :8010
+npm run build     # Production build → dist/
+```
+
+### Run Tests
+
+```bash
+# Set TEMP/TMP to project .tmp (required on Windows)
+New-Item -ItemType Directory -Force -Path ".\.tmp" | Out-Null
+$env:TEMP = (Resolve-Path ".\.tmp").Path
+$env:TMP  = $env:TEMP
+
+python -m pytest backend/tests -q
+```
+
+## Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DEEPSEEK_API_KEY` | For DeepAgent | DeepSeek API key (deepseek-v4-flash) |
+| `DASHSCOPE_API_KEY` | For RAG | DashScope embedding (text-embedding-v4) |
+| `MYSQL_HOST` | For metadata | MySQL host (default 127.0.0.1) |
+| `MYSQL_PORT` | For metadata | MySQL port (default 3306) |
+| `MYSQL_USER` | For metadata | MySQL user |
+| `MYSQL_PASSWORD` | For metadata | MySQL password |
+| `MYSQL_DATABASE` | For metadata | MySQL database name |
+| `FIN_AGENT_ADVISOR_MODE` | Optional | `deepagent` (default) / `pipeline` / `auto` |
+| `FIN_AGENT_RAG_ENABLED` | Optional | Enable Chroma retrieval (true/false) |
+| `FIN_AGENT_RETRIEVAL_MODE` | Optional | Retrieval strategy: `semantic` (default) / `bm25` (placeholder) / `hybrid` (≈ semantic) |
+| `FIN_AGENT_LLM_ENABLED` | Optional | Enable LLM (true/false) |
+| `FIN_AGENT_HOST` | Optional | Server host (default 127.0.0.1) |
+| `FIN_AGENT_PORT` | Optional | Server port (default 8010) |
+
+## Debug Endpoints
+
+| Endpoint | Agent | Status |
+|----------|-------|--------|
+| `POST /api/debug/investment-advisor` | 智能投顾 | ✅ DeepAgent 验收通过 |
+| `POST /api/debug/financial-report` | 财报分析 | ✅ DeepAgent 验收通过 |
+| `POST /api/debug/risk-control` | 风控审查 | ✅ DeepAgent 验收通过 |
+| `POST /api/debug/compliance` | 监管合规 | ✅ 真实 DeepAgent 验收通过（4/4 DA, 0 fallback） |
+| `POST /api/debug/education` | 金融科普 | ✅ 真实 DeepAgent 验收通过（P1: Case 1 16.6s, 1 composite tool, 0 fallback） |
+| `POST /api/debug/stream/{agent_id}/prepare` | SSE Prepare | ✅ 新增 — 创建流式运行任务 |
+| `GET /api/debug/stream/{run_id}` | SSE Stream | ✅ 新增 — SSE 事件流（run_started → … → run_done） |
+| `POST /api/agent/query` | 统一 Agent Router | ✅ 新增 — 自动路由至对应智能体，返回 router metadata |
+| `POST /api/consultations` | 通用入口 | 可用（advisory 有实质实现） |
+
+Each debug endpoint returns `agent_architecture` metadata including `configured_mode`, `actual_architecture`, `fallback_used`, `fallback_reason`, `tool_count`, and `tool_traces`.
+
+`POST /api/agent/query` additionally returns `router` metadata with `selected_intent`, `confidence`, `reason`, and ranked `candidates`.
+
+SSE streaming supports `agent_id=auto` for automatic routing via `POST /api/debug/stream/auto/prepare`.
+
+## Agent Status
+
+| Agent | Architecture | Status | Notes |
+|-------|-------------|--------|-------|
+| 智能投顾 | DeepAgent | ✅ 完成 | 9 工具，投顾九章报告，合规兜底，factory 缓存 + 启动预热 |
+| 财报分析 | DeepAgent | ✅ 完成 | 7 工具，财报八章报告，专属 validator + repair_func。factory 缓存已补齐。真实 DeepAgent 短输入复验通过（4/4 DA, 0 fallback）。短输入/缺字段不 fallback（repair 自动补齐八章）。validator 支持否定语境检测（"不能建议买入"等拒绝表达不误判） |
+| 风控审查 | DeepAgent | ✅ 完成 | 7 工具，风控八章报告，deterministic repair，factory 缓存已补齐。复杂场景可能 fallback |
+| 监管合规 | DeepAgent | ✅ 完成 | 7 工具，八章合规报告，context-aware validator + repair + fallback。factory 缓存已补齐。真实 DeepAgent 验收通过（4/4 DA, 0 fallback）。validator 已修复：引用/审查违规表达不再误判为模型违规输出。法规数据/政策动态更新待增强。 |
+| 金融科普 | DeepAgent | ✅ 完成 | 7 细粒度工具 + 1 复合工作流工具。P1 复合工具优化后 Case 1 从 60s/8 tools → 14s/1 tool（-77%）。DeepAgent 验收通过，factory 缓存。不含长期学习画像和个性化历史追踪。 |
+
+### 前后端联调验证（2026-06-08）
+
+- 后端：`python backend/app/main.py` → `http://127.0.0.1:8010`
+- 前端：`cd frontend && npm run dev` → `http://127.0.0.1:5173`
+- Vite proxy：`/api` → `http://127.0.0.1:8010` 已确认可用
+- 五个 debug endpoint 全部 HTTP 200，均可从前端按钮逐一调用
+- 前端体验加固：fetch 超时 240s、AbortController 取消、切换智能体自动取消旧请求、20s 慢请求提示、request ID 防旧响应覆盖
+- 三个智能体补齐 factory 缓存（财报、风控、合规）
+- 财报短输入不再 fallback（repair_func 自动补齐八章缺章节）
+- SSE 流式推理链 MVP 已完成（prepare + stream 双接口，5 agent 支持，heartbeat，HTTP fallback）
+- 工具级瞬时事件流已完成：tool_started / tool_done / tool_failed 实时推送，非 traces 补发
+- 后端 agent 测试：15 (stream) + 50 (related) passed
+- 前端 build：通过（仅 Element Plus chunk size warning）
+- 统一 Agent Router 完成，前端"自动识别"模式已接入
+- 后端 agent 测试：15 (stream) + 50 (related) + 29 (router) + 14 (agent query API) passed
+
+### 公共 DeepAgent 架构
+
+- `backend/app/agents/deepagent/base.py` — 通用 DeepAgentWrapper，支持 intent、output_validator、compliance_review_func、repair_func、runtime fallback 状态、tool_traces
+- `backend/app/agents/deepagent/registry.py` — 工具注册模式，每个工具需 tool_id + name_cn + description + hard_constraints
+- `backend/app/agents/deepagent/tool_contracts.py` — DeepAgentTool 统一协议
+- `backend/app/services/advisory_agent_factory.py` — 投顾 agent 单例缓存与预热
+- `backend/app/services/financial_report_agent_factory.py` — 财报分析 agent 单例缓存（lazy）
+- `backend/app/services/risk_control_agent_factory.py` — 风控审查 agent 单例缓存（lazy）
+- `backend/app/services/compliance_agent_factory.py` — 监管合规 agent 单例缓存（lazy）
+- `backend/app/services/education_agent_factory.py` — 金融科普 agent 单例缓存与预热
+- `backend/app/api/routes/debug_stream.py` — SSE 流式调试接口（prepare + stream）
+- `backend/app/services/streaming_run_store.py` — SSE run 进程内存储（TTL 10min）
+
+## Infrastructure Status
+
+| Module | Status | Notes |
+|--------|--------|-------|
+| AgentRouter | ✅ | 5 intents，关键词打分 + 优先级冲突解决，confidence/candidates |
+| RagPlanner | ✅ | Semantic queries；BM25/hybrid 预留 |
+| KnowledgeRetriever | ✅ | Chroma-first + mock fallback |
+| ComplianceGuard | ✅ | 20+ regex rules |
+| LLMProvider | ✅ | langchain-deepseek，deepseek-v4-flash |
+| ChromaStore | ✅ | 4 collections，PersistentClient |
+| SparseRetriever | ⚠️ | Interface defined，BM25Retriever placeholder |
+| HybridRetriever | ⚠️ | Arch shell，currently ≈ semantic |
+| CollectionSelector | ✅ | Intent → collection 白名单 |
+| MySQL Metadata Store | ✅ | 3 tables，pymysql 直连 |
+| RAG Eval System | ✅ | 40 cases，Intent 95%，Recall@5 100% |
+
+## Knowledge Base
+
+Dual-layer: **MySQL** (metadata) + **Chroma** (vectors).
+
+- MySQL: `knowledge_collections`, `knowledge_documents`, `knowledge_chunks`
+- Chroma: `advisory_knowledge`, `compliance_knowledge`, `education_knowledge`, `risk_knowledge`
+
+```bash
+# Scan documents
+python backend/scripts/ingest_knowledge.py --dry-run
+
+# Full ingest
+python backend/scripts/ingest_knowledge.py
+
+# Inspect
+python backend/scripts/inspect_chroma.py --query "资产配置" --collection advisory_knowledge
+
+# Evaluate
+python backend/scripts/evaluate_rag.py --top-k 5
+```
+
+Historical eval (2026-06-06): Intent 95% / Top-1 90% / Recall@5 100% / MRR 0.9425 — **PASS**.
+
+After later knowledge-base expansion, Top-1 / Recall@5 metrics have shown normal fluctuation. Treat the above as a historical baseline, not the latest production-quality benchmark.
+
+### RAG Evidence Validation (2026-06-09)
+
+```bash
+# Real RAG evidence validation (10 cases, retrieval + evidence only)
+python backend/scripts/debug_rag_evidence.py
+
+# With agent pipeline (first 3 cases)
+python backend/scripts/debug_rag_evidence.py --with-agent
+
+# Specific cases
+python backend/scripts/debug_rag_evidence.py --cases ADV-001,CMP-001,EDU-001
+```
+
+- Chroma: 4 collections, 44 vectors (advisory 13 / compliance 11 / education 8 / risk 12)
+- MySQL/Chroma consistency: verified via `inspect_knowledge_metadata.py --compare-chroma`
+- Evidence source_type mapping: all 4 canonical types + financial_report_knowledge mapped; prefix matching for variants
+- Collection selector: expanded to include cross-domain coverage (advisory→risk, education→risk/compliance, etc.)
+
+## Compliance Baseline
+
+- 不荐股。
+- 不预测涨跌。
+- 不承诺收益。
+- 不输出具体基金代码或产品推荐。
+- 不把 AI 输出包装成投资决策依据。
+- 不替用户做最终投资决策。
+- 投资相关输出必须包含风险提示、依据来源和可追溯信息。
+
+## Known Limitations
+
+1. **监管合规智能体**：validator 已修复为 context-aware（区分"审查引用"和"模型输出"），真实 DeepAgent 验收通过（4/4 DA, 0 fallback）。法规数据/政策动态更新待增强。
+2. **金融科普智能体**：真实 DeepAgent instrumented 复验通过。P1 复合工具优化后，简单概念解释 Case 1 为 16.6s、1 个 `simple_concept_workflow` 调用、0 fallback（较 60s/8 tools baseline 明显下降）。复杂防诈骗/产品比较/学习路径场景仍可能走细粒度工具，耗时会高于简单概念解释；不含长期学习画像和个性化历史追踪。教育场景中合规审查器可能对引用的诈骗话术产生误判（与监管合规智能体同源的 validator 问题）。
+3. **前端**：五智能体统一工作台已完成前后端联调验证。支持"自动识别"模式（Router）和手动选择智能体模式。SSE 实时推理链展示（prepare + stream 双接口，EventSource 连接），默认流式运行、HTTP fallback。工具调用事件基于 tool_traces 补发（非瞬时事件），heartbeat 每 5s 显示 agent 仍在运行。仍为 MVP：tool_call 事件不是 DeepAgent 执行中即时发出。仍未完成会话历史、报告导出。
+4. **DeepAgent 预热**：五个智能体已全部补齐 factory 缓存（Lazy Cache）。当前仅投顾在 FastAPI startup 时预热，其余四个按首次请求 lazy-init（首次较慢但缓存后续请求）。后续可考虑分级预热策略。
+5. **vendor 依赖管理**：`backend/vendor/` 是当前阶段的工程兜底方案，后续可迁移为标准 pip 依赖管理。
+6. **RAG 增强**：已完成基础语义检索真实验收。source_type 映射已补齐（所有 canonical collection 映射完毕），collection selector 已扩展跨域覆盖。BM25/Hybrid Retrieval 架构壳子已预留（`FIN_AGENT_RETRIEVAL_MODE` 配置，`SparseRetriever`/`BM25Retriever`/`HybridRetriever` 类），但当前 BM25 为 placeholder（search 返回空），hybrid ≈ semantic。未来需实现真实 BM25 排序 + RRF 融合。文档质量评估、数据源采集与更新机制、大规模知识库扩展仍待增强。当前知识库规模有限（44 vectors/4 collections），复杂金融问题的覆盖能力受限。
+7. **DeepAgent 输出稳定性**：LLM 输出格式不完全稳定，已通过 validators、repair、fallback 三层兜底。财报分析真实复验通过（4/4 DA, 0 fallback），但 LLM 倾向于重复调用分析工具（7 个工具可能被调用 11-19 次），导致耗时偏高（46-67s）。"每个工具最多 1 次"约束 deepseek-v4-flash 不完全服从。
+8. **SSE 流式推理链**：已实现工具级瞬时事件流。`tool_started`/`tool_done`/`tool_failed` 在 DeepAgent 工具调用开始/成功/失败时实时推送（通过 `event_callback` 机制，`queue.Queue` 线程安全通信）。heartbeat 机制确保长请求期间前端显示运行中状态。EventSource 不支持 POST body，采用 prepare + stream 双接口。Pipeline fallback 时仍保留 legacy `tool_call` traces 补发。
+9. **Agent Router**：当前为 deterministic keyword scoring，不是 LLM router。复杂多意图问题可能路由不准。关键词权重和优先级规则需要随业务扩展持续调优。后续可加入 LLM rerank 或多智能体协作编排。
