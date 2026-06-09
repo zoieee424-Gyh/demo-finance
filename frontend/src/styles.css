@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #eef2ef;
+  color: #17211c;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #aab8af;
+}
+
+::-webkit-scrollbar-track {
+  background: #edf1ed;
+}
+
+.el-button {
+  border-radius: 4px;
+  letter-spacing: 0;
+}
+
+.el-button--primary {
+  --el-button-bg-color: #1f5f45;
+  --el-button-border-color: #1f5f45;
+  --el-button-hover-bg-color: #287653;
+  --el-button-hover-border-color: #287653;
+  --el-button-active-bg-color: #184b36;
+  --el-button-active-border-color: #184b36;
+}
+
+.el-textarea__inner,
+.el-input__wrapper,
+.el-select__wrapper {
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px #ccd7d0 inset;
+}
+
+.el-textarea__inner:focus,
+.el-input__wrapper.is-focus,
+.el-select__wrapper.is-focused {
+  box-shadow: 0 0 0 1px #8d7650 inset;
+}
+
+.el-tag {
+  border-radius: 3px;
+}
