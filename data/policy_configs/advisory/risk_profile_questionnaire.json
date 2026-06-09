@@ -1,0 +1,238 @@
+{
+  "meta": {
+    "title": "投资者风险画像问卷",
+    "version": "1.0.0",
+    "created": "2026-06-06",
+    "source": "基于证监会《证券期货投资者适当性管理办法》、基金业协会《基金募集机构投资者适当性管理实施指引》公开材料整理，结合通用投资者风险评估框架编写。本文件为测试预置资料，非监管原文。",
+    "usage": "用于智能投顾智能体的用户风险画像解析（ProfileAnalyzer），帮助确定投资者的风险等级。",
+    "disclaimer": "本问卷为通用框架参考，不替代持牌机构的正式风险评估。AI 不能决定用户风险等级，用户需自行确认评估结果。"
+  },
+  "risk_levels": {
+    "conservative": {
+      "label": "保守型",
+      "min_score": 0,
+      "max_score": 25,
+      "description": "对本金安全性要求极高，不愿承担明显波动，适合以现金管理、短债等低风险资产为主的配置。"
+    },
+    "stable": {
+      "label": "稳健型",
+      "min_score": 26,
+      "max_score": 50,
+      "description": "可接受小幅波动以换取略高于通胀的回报，适合以固收为主、少量权益为辅的配置。"
+    },
+    "balanced": {
+      "label": "平衡型",
+      "min_score": 51,
+      "max_score": 75,
+      "description": "能承受中等波动，追求长期稳健增值，适合股债均衡配置。"
+    },
+    "aggressive": {
+      "label": "进取型",
+      "min_score": 76,
+      "max_score": 100,
+      "description": "追求较高长期回报，能承受显著回撤和波动，适合权益类资产占比较高的配置。"
+    }
+  },
+  "dimensions": [
+    {
+      "dimension_id": "risk_capacity",
+      "label": "风险承受能力",
+      "label_cn": "风险承受能力",
+      "description": "客观财务条件对投资亏损的吸收能力",
+      "weight": 0.35
+    },
+    {
+      "dimension_id": "risk_attitude",
+      "label": "风险态度",
+      "label_cn": "风险态度",
+      "description": "主观上对投资波动的接受程度",
+      "weight": 0.25
+    },
+    {
+      "dimension_id": "investment_experience",
+      "label": "投资经验",
+      "label_cn": "投资经验",
+      "description": "过往投资经历和对金融产品的了解程度",
+      "weight": 0.20
+    },
+    {
+      "dimension_id": "time_horizon",
+      "label": "投资期限",
+      "label_cn": "投资期限",
+      "description": "资金可被占用的时间长度",
+      "weight": 0.10
+    },
+    {
+      "dimension_id": "liquidity_need",
+      "label": "流动性需求",
+      "label_cn": "流动性需求",
+      "description": "对资金随时可提取的需求程度",
+      "weight": 0.10
+    }
+  ],
+  "questions": [
+    {
+      "qid": "Q01",
+      "dimension": "risk_capacity",
+      "question": "您的月收入水平（税前）大致属于哪个区间？",
+      "options": [
+        {"label": "低于 5,000 元", "score": 5},
+        {"label": "5,000–10,000 元", "score": 10},
+        {"label": "10,000–20,000 元", "score": 15},
+        {"label": "20,000–50,000 元", "score": 20},
+        {"label": "50,000 元以上", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q02",
+      "dimension": "risk_capacity",
+      "question": "可用于投资的资金占您总资产（不含自住房产）的比例大致是多少？",
+      "options": [
+        {"label": "少于 10%", "score": 5},
+        {"label": "10%–25%", "score": 10},
+        {"label": "25%–50%", "score": 15},
+        {"label": "50%–75%", "score": 20},
+        {"label": "75% 以上", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q03",
+      "dimension": "risk_capacity",
+      "question": "您目前的家庭总负债（房贷、消费贷等）占年收入的比例？",
+      "options": [
+        {"label": "超过年收入 5 倍", "score": 2},
+        {"label": "年收入的 3–5 倍", "score": 5},
+        {"label": "年收入的 1–3 倍", "score": 10},
+        {"label": "年收入的 1 倍以内", "score": 18},
+        {"label": "无负债", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q04",
+      "dimension": "risk_capacity",
+      "question": "如果您的投资组合在一年内下跌 20%，对您的生活会有什么影响？",
+      "options": [
+        {"label": "严重影响日常生活", "score": 2},
+        {"label": "有一定影响，需要调整开支", "score": 8},
+        {"label": "影响较小，可承受", "score": 16},
+        {"label": "基本不影响", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q05",
+      "dimension": "risk_attitude",
+      "question": "以下哪项最符合您对投资的态度？",
+      "options": [
+        {"label": "不希望本金有任何损失", "score": 2},
+        {"label": "可以接受小幅波动，但希望大部分本金安全", "score": 10},
+        {"label": "为了更高收益愿意承担中等波动", "score": 18},
+        {"label": "追求高收益，能接受大幅波动", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q06",
+      "dimension": "risk_attitude",
+      "question": "当您的投资出现账面浮亏时，您通常会怎么做？",
+      "options": [
+        {"label": "立即全部赎回，无法承受继续亏损", "score": 2},
+        {"label": "部分赎回，降低风险敞口", "score": 10},
+        {"label": "观望不动，等待市场回暖", "score": 18},
+        {"label": "择机加仓，认为下跌是买入机会", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q07",
+      "dimension": "risk_attitude",
+      "question": "您期望的年化投资回报率大致是多少？",
+      "options": [
+        {"label": "跑赢通胀即可（3%–5%）", "score": 8},
+        {"label": "5%–8%", "score": 12},
+        {"label": "8%–12%", "score": 18},
+        {"label": "12% 以上", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q08",
+      "dimension": "investment_experience",
+      "question": "您的投资经验有多少年？",
+      "options": [
+        {"label": "无投资经验", "score": 2},
+        {"label": "少于 1 年", "score": 6},
+        {"label": "1–3 年", "score": 12},
+        {"label": "3–5 年", "score": 18},
+        {"label": "5 年以上", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q09",
+      "dimension": "investment_experience",
+      "question": "您对以下哪些金融产品有实际投资经验？（多选或选最高项计分）",
+      "options": [
+        {"label": "银行存款/货币基金", "score": 4},
+        {"label": "银行理财/债券基金", "score": 10},
+        {"label": "股票基金/混合基金", "score": 16},
+        {"label": "股票/ETF", "score": 22},
+        {"label": "期货/期权/加密货币等高风险产品", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q10",
+      "dimension": "time_horizon",
+      "question": "您计划将这笔资金投资多长时间？",
+      "options": [
+        {"label": "6 个月以内", "score": 2},
+        {"label": "6 个月–1 年", "score": 8},
+        {"label": "1–3 年", "score": 14},
+        {"label": "3–5 年", "score": 20},
+        {"label": "5 年以上", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q11",
+      "dimension": "time_horizon",
+      "question": "这笔投资的主要目的是什么？",
+      "options": [
+        {"label": "短期周转/应急备用", "score": 4},
+        {"label": "购房/购车首付（1–3年）", "score": 10},
+        {"label": "子女教育金（3–10年）", "score": 16},
+        {"label": "退休养老储备（10年以上）", "score": 22},
+        {"label": "长期财富增值，无特定用途", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q12",
+      "dimension": "liquidity_need",
+      "question": "您在未来 6–12 个月内是否需要从投资中提取大额资金？",
+      "options": [
+        {"label": "确定需要提取大部分", "score": 2},
+        {"label": "可能需要提取一部分", "score": 8},
+        {"label": "不太确定", "score": 14},
+        {"label": "不需要，可长期持有", "score": 22},
+        {"label": "完全不需要，并有额外资金可追加投资", "score": 25}
+      ]
+    },
+    {
+      "qid": "Q13",
+      "dimension": "liquidity_need",
+      "question": "您目前持有多少应急备用金（相当于几个月生活费）？",
+      "options": [
+        {"label": "不足 1 个月", "score": 2},
+        {"label": "1–3 个月", "score": 8},
+        {"label": "3–6 个月", "score": 15},
+        {"label": "6–12 个月", "score": 22},
+        {"label": "12 个月以上", "score": 25}
+      ]
+    }
+  ],
+  "scoring": {
+    "method": "weighted_sum",
+    "procedure": "每个维度内的题目得分取平均值，再按维度权重加权求和得到总分（0–100）。总分对照 risk_levels 的分数区间确定风险等级。",
+    "example": "risk_capacity 平均 20×0.35 + risk_attitude 平均 15×0.25 + investment_experience 平均 12×0.20 + time_horizon 平均 18×0.10 + liquidity_need 平均 20×0.10 = 17.45 分 → 保守型"
+  },
+  "notes": [
+    "本问卷为通用评估框架，不能完全替代持牌机构的一对一风险评估。",
+    "AI 辅助评估结果仅供参考，投资者应结合自身实际情况确认风险等级。",
+    "风险等级不是一成不变的，建议每年或发生重大生活变化时重新评估。",
+    "禁止仅凭单一问题（如'我不想亏钱'）直接判定风险等级。"
+  ]
+}

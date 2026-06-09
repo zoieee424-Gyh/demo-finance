@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "title": "智能投顾合规规则库",
+    "version": "1.0.0",
+    "created": "2026-06-06",
+    "source": "基于中国证监会《证券投资顾问业务暂行规定》《证券期货投资者适当性管理办法》、基金业协会《公开募集证券投资基金投资顾问服务业务指引》等公开材料整理。本文件为测试预置资料，非监管原文。",
+    "usage": "用于智能投顾合规策略器（AdvisoryCompliancePolicy）和全局合规校验（ComplianceGuard），确保投顾输出不触碰合规红线。",
+    "disclaimer": "本规则库为 AI 辅助合规参考，不能替代合规官人工审核。所有 AI 输出仍需用户独立判断。"
+  },
+  "rules": [
+    {
+      "rule_id": "ADV-CMP-001",
+      "name": "禁止推荐个股",
+      "name_cn": "禁止推荐个股",
+      "severity": "violation",
+      "category": "stock_tipping",
+      "description": "智能投顾不得推荐或建议买入/卖出/持有具体股票（含 A 股、港股、美股等），不得提及股票代码。",
+      "pattern_examples": [
+        "推荐买入 XXXX（股票代码）",
+        "建议 600XXX 可以入手",
+        "这只股票值得持有"
+      ],
+      "safe_expression": "股票类资产整体可作为权益配置的一部分，但 AI 不推荐具体个股。",
+      "risk_notice": "本平台不推荐个股，投资者应自行研究和判断具体投资标的。"
+    },
+    {
+      "rule_id": "ADV-CMP-002",
+      "name": "禁止承诺收益",
+      "name_cn": "禁止承诺收益",
+      "severity": "violation",
+      "category": "return_promise",
+      "description": "不得以任何形式承诺或暗示投资一定能获得某收益率，包括保本、稳赚、零风险等表述。",
+      "pattern_examples": [
+        "年化收益保证 8%",
+        "稳赚不赔",
+        "百分百保本",
+        "肯定能赚钱"
+      ],
+      "safe_expression": "根据历史数据，该类资产的长期年化收益大致在 X%–Y% 区间，但过往业绩不代表未来表现。",
+      "risk_notice": "投资存在亏损风险，任何产品均不保本保收益，请根据自身风险承受能力独立判断。"
+    },
+    {
+      "rule_id": "ADV-CMP-003",
+      "name": "禁止预测涨跌",
+      "name_cn": "禁止预测涨跌",
+      "severity": "violation",
+      "category": "price_prediction",
+      "description": "不得对市场、行业、个股的未来涨跌做出确定性预测。",
+      "pattern_examples": [
+        "下周必涨",
+        "目标价 50 元",
+        "牛市即将到来",
+        "大盘肯定会大跌"
+      ],
+      "safe_expression": "市场短期走势难以预测，投资者应关注长期趋势，避免基于短期预测做决策。",
+      "risk_notice": "市场走势受多重因素影响，本平台不提供涨跌预测，请勿据此做出交易决策。"
+    },
+    {
+      "rule_id": "ADV-CMP-004",
+      "name": "禁止替用户做最终投资决策",
+      "name_cn": "禁止替用户做投资决策",
+      "severity": "violation",
+      "category": "decision_substitution",
+      "description": "AI 不能替用户做出买入/卖出/持有/加仓/减仓的最终决定。",
+      "pattern_examples": [
+        "你应该立刻买入",
+        "你必须加仓",
+        "全仓买入这个板块",
+        "赶紧清仓"
+      ],
+      "safe_expression": "以上信息供您参考，具体投资决策请结合您的实际情况独立做出。",
+      "risk_notice": "AI 不能替代您做出投资决策，所有交易操作由您自主决定并承担相应风险。"
+    },
+    {
+      "rule_id": "ADV-CMP-005",
+      "name": "禁止夸大历史业绩",
+      "name_cn": "禁止夸大历史业绩",
+      "severity": "warning",
+      "category": "performance_misrepresentation",
+      "description": "不得选取最优时间段业绩进行夸大宣传，不得暗示历史业绩能保证未来收益。",
+      "pattern_examples": [
+        "过去三年翻了十倍",
+        "年化收益稳定 30%",
+        "从来没有亏过"
+      ],
+      "safe_expression": "该资产类别在过去 X 年间经历了 Y% 至 Z% 的波动，长期投资者应关注跨越周期的复合回报。",
+      "risk_notice": "过往业绩不代表未来表现，短期高收益往往伴随高风险。"
+    },
+    {
+      "rule_id": "ADV-CMP-006",
+      "name": "必须提示风险",
+      "name_cn": "必须提示风险",
+      "severity": "required",
+      "category": "risk_disclosure",
+      "description": "所有涉及投资建议的输出，必须包含明确的风险提示。",
+      "pattern_examples": ["（缺少风险提示的回答）"],
+      "safe_expression": "投资有风险，入市需谨慎。本回答仅作信息参考，不构成投资决策依据。",
+      "risk_notice": "投资有风险，入市需谨慎。本回答仅作信息参考，不构成投资决策依据，请根据自身风险承受能力独立判断。"
+    },
+    {
+      "rule_id": "ADV-CMP-007",
+      "name": "必须说明仅供参考",
+      "name_cn": "必须说明仅供参考",
+      "severity": "required",
+      "category": "reference_only",
+      "description": "AI 输出必须声明其辅助工具定位，不得包装为专业投资建议或决策依据。",
+      "pattern_examples": ["（缺少参考声明的回答）"],
+      "safe_expression": "以上分析由 AI 智能投顾辅助生成，仅供参考，不构成投资建议。",
+      "risk_notice": "AI 输出为辅助参考信息，不构成正式投资建议或投资决策依据。"
+    },
+    {
+      "rule_id": "ADV-CMP-008",
+      "name": "禁止推荐具体基金产品",
+      "name_cn": "禁止推荐具体基金",
+      "severity": "violation",
+      "category": "fund_tipping",
+      "description": "不得推荐具体基金名称、基金代码或特定基金公司产品。可以提及基金类别（如宽基指数基金类）。",
+      "pattern_examples": [
+        "推荐买入 XX 沪深 300ETF（510XXX）",
+        "XX 基金的基金经理很厉害，建议配置"
+      ],
+      "safe_expression": "宽基指数基金类可作为权益配置的底层资产，投资者可根据费率和跟踪误差自行选择具体产品。",
+      "risk_notice": "本平台不推荐具体基金产品，投资者应自行比较产品费率、规模和跟踪误差后做出选择。"
+    },
+    {
+      "rule_id": "ADV-CMP-009",
+      "name": "禁止推荐具体理财产品",
+      "name_cn": "禁止推荐具体理财产品",
+      "severity": "violation",
+      "category": "product_tipping",
+      "description": "不得推荐具体银行理财产品、信托产品或保险产品。",
+      "pattern_examples": [
+        "推荐购买 XX 银行理财产品 YYY",
+        "XX 信托产品收益不错"
+      ],
+      "safe_expression": "短债/固收类资产可包括银行理财、同业存单基金等低风险产品，投资者可关注产品期限和流动性匹配。",
+      "risk_notice": "本平台不推荐具体理财产品，购买前请仔细阅读产品说明书和风险揭示书。"
+    },
+    {
+      "rule_id": "ADV-CMP-010",
+      "name": "输出必须可追溯",
+      "name_cn": "输出必须可追溯",
+      "severity": "required",
+      "category": "traceability",
+      "description": "投顾回答中引用的数据和结论应有据可查，必须附带参考依据来源。",
+      "pattern_examples": ["（缺少参考依据的回答）"],
+      "safe_expression": "参考依据：《资产配置基础原则》（投顾知识，置信度 0.66）",
+      "risk_notice": "以上参考依据来自知识库检索，置信度表示语义匹配程度，非事实准确性评分。"
+    }
+  ],
+  "notes": [
+    "violation 级别的规则一旦触发，应在回答中明确拒绝并给出合规解释。",
+    "warning 级别的规则触发时应追加风险提示。",
+    "required 级别的规则为必须满足项，缺失时回答不应被视为合规。",
+    "本规则库不替代持牌机构的合规审查流程。",
+    "管理员可定期更新 rule_id 对应的 pattern_examples 以适应新型违规表达。"
+  ]
+}
