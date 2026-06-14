@@ -34,8 +34,9 @@
 - 项目源代码：当前仓库完整代码。
 - Git 日志说明：`docs/git-log.md`。
 - 启动方式：双击 `start_finance_agent.bat`。
-- 智能体流程图：`docs/agent-flows.md`。
-- 视频逐字稿：`docs/video-script.md`。
+- 智能体流程图：`智能体流程图.md`。
+- 项目逐字稿：`项目逐字稿.md`。
+- docs 备份路径：`docs/agent-flows.md`、`docs/video-script.md`。
 
 ### 大模型说明
 
