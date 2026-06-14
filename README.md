@@ -35,7 +35,7 @@
 - Git 日志说明：`docs/git-log.md`。
 - 启动方式：双击 `start_finance_agent.bat`。
 - 智能体流程图：`docs/agent-flows.md`。
-- 视频逐字稿：建议后续补充到 `docs/video-script.md`。
+- 视频逐字稿：`docs/video-script.md`。
 
 ### 大模型说明
 
