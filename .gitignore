@@ -11,3 +11,4 @@ dist/
 .env.*
 data/vector_store/
 data/chroma/
+项目讲解视频.mp4
